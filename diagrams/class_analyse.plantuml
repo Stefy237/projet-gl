@@ -1,0 +1,92 @@
+@startuml projet gl - diagramme de classe d'analyse
+' --- Direction et espacement ---
+' left to right direction
+skinparam ranksep 50
+skinparam nodesep 50
+' skinparam linetype ortho
+skinparam Shadowing false
+
+enum Univers {
+
+}
+class Personnage {
+    String nom
+    String profession
+    String naissanceDate
+    String image
+    Univers univers
+    void setProfession(String newProfession)
+    void supprimer()
+    void setMeneurjeu(MeneurJeu newMeneurJeu)
+}
+class MeneurJeu {
+    void accepterPartie(Partie p)
+    void accepterPersonnage(Personage personnage)
+    void valliderEpisode(Episode e)
+}
+class Joueur {
+    String nom
+    void cederPersonnage(Joueur j)
+    Personnage creerPersonnage(String nom, String naissanceDate, String profession, Biographie brographieInitiale)
+    Partie proposerPartie(String titre, Univers univers, String resume)
+    void proposerPersonnage(MeneurJeu m)
+    void valliderEpisode(Episode e)
+}
+class Partie {
+    boolean jouee
+    void valider()
+    void supprimer()
+    void ajouterPersonnage(Personnage p)
+    void supprimerPersonnage(Personnage p)
+}
+class Aventure {
+
+}
+class Biographie {
+    String titre
+    void ajouterEpisode(Episode e)
+    void afficherBiographiePublique()
+    void afficherBiographiePrivee()
+}
+class Episode {
+    String titre
+    void ajouterParagraphe()
+    void sauvegarder()
+    void supprimer()
+    void valider()
+}
+class Paragraphe {
+    String titre
+    boolean isPrivate
+    void rendrePublique()
+}
+diamond diamond1
+diamond diamond2
+
+Joueur "1" -- diamond1
+Partie "1" -- diamond1
+Personnage "1" -- diamond1
+
+MeneurJeu "1" -- diamond2
+Partie "1" -- diamond2
+Personnage "1"-- diamond2
+
+Episode --* Biographie
+Paragraphe --* Episode
+
+Episode --> "0,*" Aventure : est lié
+Partie --> Aventure : se rapporte
+
+Personnage "1,*" --> "1,*" Aventure
+Personnage "1" -->" 1" Biographie 
+Partie .. Univers
+Personnage .. Univers
+MeneurJeu "0,*" --> "1" Joueur 
+
+' MeneurJeu -[hidden]down-> Joueur
+' Partie -[hidden]down-> Joueur
+
+' Partie -[hidden]down-> Univers
+' Partie -[hidden]down-> Aventure 
+' Univers -[hidden]right-> Aventure
+@enduml

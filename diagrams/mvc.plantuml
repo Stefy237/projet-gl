@@ -1,0 +1,72 @@
+@startuml
+title Modélisation MVC — Projet GL
+
+' --- Direction générale ---
+left to right direction
+skinparam ranksep 100
+skinparam nodesep 60
+skinparam linetype ortho
+' skinparam class {
+'   BackgroundColor #f9fafb
+'   BorderColor #2B6CB0
+'   FontSize 13
+' }
+' skinparam packageStyle rectangle
+' skinparam shadowing false
+
+' === MODEL ===
+package "Model" #DDFFDD {
+    class Joueur
+    class MeneurJeu
+    class Partie
+    class Personnage
+    class Aventure
+    class Biographie
+    class Episode
+    class Paragraphe
+    enum Univers
+}
+
+' === CONTROLLER ===
+package "Controller" #FFE4B5 {
+    class PersonnageController
+    class PartieController
+    class BiographieController
+    class ConnexionController
+    class JoueurController
+}
+
+' === VIEW ===
+package "View" #DDEEFF {
+    class PersonnageView
+    class PartieView
+    class BiographieView
+    class EpisodeView
+    class ParagrapheView
+    class ConnexionView
+    class JoueurView
+}
+
+' --- Relations principales ---
+PersonnageController --> Personnage
+PartieController --> Partie
+BiographieController --> Biographie
+BiographieController --> Episode
+BiographieController --> Paragraphe
+JoueurController --> Joueur
+JoueurController --> MeneurJeu
+
+PersonnageView --> PersonnageController
+PartieView --> PartieController
+BiographieView --> BiographieController
+ParagrapheView --> BiographieController
+EpisodeView --> BiographieController
+ConnexionView --> ConnexionController
+JoueurView --> JoueurController
+
+' --- Relations d'observation ---
+PartieView ..> Partie : observe >
+EpisodeView ..> Episode : observe >
+ParagrapheView ..> Paragraphe : observe >
+JoueurView ..> Joueur : observe >
+@enduml

@@ -1,0 +1,236 @@
+@startuml Diagramme de classes logiciel - Projet GL
+
+' =============================
+' === PARAMÈTRES GLOBAUX ===
+' =============================
+skinparam ranksep 120
+skinparam nodesep 100
+skinparam linetype ortho
+left to right direction
+
+' =============================
+' === MODELE (Model) ===
+' =============================
+package "Model" #DDFFDD {
+
+  enum Univers
+
+  class Personnage {
+    -String nom
+    -String profession
+    -String naissanceDate
+    -String image
+    -Univers univers
+    -Biographie biographie
+    +void setProfession(String newProfession)
+    +void supprimer()
+  }
+
+  class Joueur {
+    -String nom
+    +Personnage creerPersonnage(String nom, String naissanceDate, String profession, Biographie bioInitiale)
+    +Partie proposerPartie(String titre, Univers univers, String resume)
+  }
+
+  class MeneurJeu {
+    +void accepterPartie(Partie p)
+    +void accepterPersonnage(Personnage personnage)
+    +void validerEpisode(Episode e)
+  }
+
+  class Partie {
+    -boolean dejaJouee
+    -boolean validee
+    -List<Personnage> personnages
+    +void valider()
+    +void ajouterPersonnage(Personnage p)
+    +void supprimerPersonnage(Personnage p)
+    +void jouer()
+  }
+
+  class Aventure
+  class Biographie {
+    -String titre
+    -List<Episode> episodes
+    +void ajouterEpisode(Episode e)
+  }
+
+  class Episode {
+    -String titre
+    -List<Paragraphe> paragraphes
+    +void ajouterParagraphe(Paragraphe p)
+    +void valider()
+  }
+
+  class Paragraphe {
+    -String titre
+    -boolean isPrivate
+    +void rendrePublique()
+  }
+
+  abstract class Sujet {
+    +attache(Observateur o)
+    +detache(Observateur o)
+    +informe()
+  }
+
+  interface Observateur {
+    +miseAJour()
+  }
+  ' diamond diamond1 
+  ' diamond diamond2 
+
+  Sujet <|-- Partie
+  Sujet <|-- Episode
+  Sujet <|-- Paragraphe
+  Sujet <|-- Joueur
+}
+
+' =============================
+' === VUE (View) ===
+' =============================
+package "View" #DDEEFF {
+  class VuePartie {
+    +afficherPartie(Partie p)
+  }
+  class VueBiographie {
+    +afficherEpisodes(List<Episode> episodes)
+  }
+  class VueEpisode {
+    +afficherParagraphes(List<Paragraphe> paragraphes)
+  }
+  class VueParagraphe {
+    +afficherDetails()
+  }
+  class VueConnexion {
+    +afficherVueJoueur(String joueurName)
+  }
+  class VuePersonnage {
+    +afficherDetails(Personnage p)
+  }
+  class VueJoueur {
+    +afficherParties(List<Partie> parties)
+  }
+
+}
+
+Observateur <|.. VuePartie
+Observateur <|.. VueEpisode
+Observateur <|.. VueParagraphe
+Observateur <|.. VueJoueur
+
+' =============================
+' === CONTROLEUR (Controller) ===
+' =============================
+package "Controller" #FFE4B5 {
+  class ControleurPartie {
+    +Partie creerPartie()
+    +void modifierPartie()
+  }
+  class ControleurJoueur {
+    +Joueur creerJoueur()
+    +void modifierJoueur()
+  }
+  class ControleurPersonnage {
+    +Personnage creerPersonnage()
+    +void modifierPersonnage()
+  }
+  class ControleurBiographie {
+    +Biographie creerBiographie()
+    +void modifierBiographie()
+  }
+}
+
+' === Relations MVC ===
+ControleurPartie --> Partie
+ControleurJoueur --> Joueur
+ControleurPersonnage --> Personnage
+ControleurBiographie --> Biographie
+ControleurJoueur --> MeneurJeu
+
+VuePartie --> ControleurPartie
+VueJoueur --> ControleurJoueur
+VuePersonnage --> ControleurPersonnage
+VueBiographie --> ControleurBiographie
+VueParagraphe --> ControleurBiographie
+VueEpisode --> ControleurBiographie
+VueConnexion --> ControleurJoueur
+
+VuePartie .[#blue].> Partie : observe >
+VueEpisode .[#blue].> Episode : observe >
+VueParagraphe .[#blue].> Paragraphe : observe >
+VueJoueur .[#blue].> Joueur : observe >
+
+' =============================
+' === PERSISTENCE (SQLite) ===
+' =============================
+package "Persistence" #FFF2CC {
+
+  class SQLiteManager {
+    -Connection connection
+    +Connection getConnection()
+    +void closeConnection()
+  }
+
+  interface DAO<T> {
+    +void save(T entity)
+    +T findById(int id)
+    +List<T> findAll()
+    +void update(T entity)
+    +void delete(int id)
+  }
+
+  class PersonnageDAO {
+    +void save(Personnage p)
+    +Personnage findById(int id)
+    +List<Personnage> findAll()
+    +void update(Personnage p)
+    +void delete(int id)
+  }
+
+  class JoueurDAO {
+    +void save(Joueur j)
+    +Joueur findById(int id)
+    +Joueur findByName(String name)
+    +List<Joueur> findAll()
+  }
+
+  class PartieDAO {
+    +void save(Partie p)
+    +List<Partie> findAll()
+    +Partie findById(int id)
+  }
+  
+  class ParagrapheDAO {
+    +void save(Paragraphe p)
+    +List<Paragraphe> findAll()
+    +Paragraphe findById(int id)
+  }
+
+  DAO <|.. PersonnageDAO
+  DAO <|.. JoueurDAO
+  DAO <|.. PartieDAO
+  DAO <|.. ParagrapheDAO
+
+  SQLiteManager --> DAO : fournit connexion >
+
+  PersonnageDAO --> SQLiteManager
+  JoueurDAO --> SQLiteManager
+  PartieDAO --> SQLiteManager
+  ParagrapheDAO --> SQLiteManager
+
+  PersonnageDAO <-- Personnage : gère la persistance >
+  ParagrapheDAO <-- Episode
+  JoueurDAO <-- Joueur : gère la persistance >
+  PersonnageDAO <-- Joueur
+  PartieDAO <-- Joueur
+  ParagrapheDAO <-- Joueur
+  PartieDAO <-- Partie : gère la persistance >
+  ParagrapheDAO <-- Paragraphe : gère la persistance >
+}
+
+' Alignement vertical (vue du haut vers le bas)
+' Model -[hidden]down-> Controller
+' Controller -[hidden]down-> Persistence
+
+@enduml

@@ -135,26 +135,26 @@ package "View" #DDEEFF {
 
   }
 
-  Vue <|.. VueConfirmation
-  Vue <|.. VueConnexion
-  Vue <|.. VueJoueur
-  Vue <|.. VueAccueil
-  Vue <|.. VueBiographie
-  Vue <|.. VueAjouterParagraphe 
-  Vue <|.. VueModifierParagraphe
-  Vue <|.. VuePartie
-  Vue <|.. VueAjouterPartie
-  Vue <|.. VueModifierPartie
-  Vue <|.. VuePersonnage
-  Vue <|.. VueAjouterPersonnage
-  Vue <|.. VueModifierPersonnage
+  Vue <|.[#9E9E9E]. VueConfirmation
+  Vue <|.[#9E9E9E]. VueConnexion
+  Vue <|.[#9E9E9E]. VueJoueur
+  Vue <|.[#9E9E9E]. VueAccueil
+  Vue <|.[#9E9E9E]. VueBiographie
+  Vue <|.[#9E9E9E]. VueAjouterParagraphe 
+  Vue <|.[#9E9E9E]. VueModifierParagraphe
+  Vue <|.[#9E9E9E]. VuePartie
+  Vue <|.[#9E9E9E]. VueAjouterPartie
+  Vue <|.[#9E9E9E]. VueModifierPartie
+  Vue <|.[#9E9E9E]. VuePersonnage
+  Vue <|.[#9E9E9E]. VueAjouterPersonnage
+  Vue <|.[#9E9E9E]. VueModifierPersonnage
 }
 
 ' Implémentation du partern observateur
 
 Observateur <|.. VuePartie
 Observateur <|.. VueEpisode
-Observateur <|.. VueParagraphe
+Observateur <|.. VueBiographie
 Observateur <|.. VueJoueur
 
 ' =============================
@@ -233,19 +233,19 @@ package "Controller" #FFE4B5 {
 
   }
 
-  Controleur <|-- ControleurConfirmation
-  Controleur <|-- ControleurConnexion
-  Controleur <|-- ControleurJoueur
-  Controleur <|-- ControleurAccueil
-  Controleur <|-- ControleurBiographie
-  Controleur <|-- ControleurAjouterParagraphe 
-  Controleur <|-- ControleurModifierParagraphe
-  Controleur <|-- ControleurPartie
-  Controleur <|-- ControleurAjouterPartie
-  Controleur <|-- ControleurModifierPartie
-  Controleur <|-- ControleurPersonnage
-  Controleur <|-- ControleurAjouterPersonnage
-  Controleur <|-- ControleurModifierPersonnage
+  Controleur <|-[#9E9E9E]- ControleurConfirmation
+  Controleur <|-[#9E9E9E]- ControleurConnexion
+  Controleur <|-[#9E9E9E]- ControleurJoueur
+  Controleur <|-[#9E9E9E]- ControleurAccueil
+  Controleur <|-[#9E9E9E]- ControleurBiographie
+  Controleur <|-[#9E9E9E]- ControleurAjouterParagraphe 
+  Controleur <|-[#9E9E9E]- ControleurModifierParagraphe
+  Controleur <|-[#9E9E9E]- ControleurPartie
+  Controleur <|-[#9E9E9E]- ControleurAjouterPartie
+  Controleur <|-[#9E9E9E]- ControleurModifierPartie
+  Controleur <|-[#9E9E9E]- ControleurPersonnage
+  Controleur <|-[#9E9E9E]- ControleurAjouterPersonnage
+  Controleur <|-[#9E9E9E]- ControleurModifierPersonnage
 
   Controleur .. Commande
   ControleurConfirmation .. Commande
@@ -256,27 +256,16 @@ ControleurJoueur --> Joueur
 ControleurPersonnage --> Personnage
 ControleurBiographie --> Biographie
 
-VuePartie ..|> Vue
-VueJoueur ..|> Vue
-VuePersonnage ..|> Vue
-VueBiographie ..|> Vue
-VueParagraphe ..|> Vue
-VueEpisode ..|> Vue
-VueConnexion ..|> Vue
-VueAccueil ..|> Vue
-
 VuePartie --> ControleurPartie
 VueJoueur --> ControleurJoueur
 VuePersonnage --> ControleurPersonnage
 VueBiographie --> ControleurBiographie
-VueParagraphe --> ControleurBiographie
 VueEpisode --> ControleurBiographie
 VueConnexion --> ControleurJoueur
 VueAccueil --> ControleurJoueur
 
 VuePartie .[#blue].> Partie : observe >
 VueEpisode .[#blue].> Episode : observe >
-VueParagraphe .[#blue].> Paragraphe : observe >
 VueJoueur .[#blue].> Joueur : observe >
 
 ' =============================

@@ -25,19 +25,14 @@ package "Model" #DDFFDD {
     +void setProfession(String newProfession)
     +void supprimer()
   }
-
   class Joueur {
     -String nom
     +Personnage creerPersonnage(String nom, String naissanceDate, String profession, Biographie bioInitiale)
     +Partie proposerPartie(String titre, Univers univers, String resume)
-  }
-
-  class MeneurJeu {
     +void accepterPartie(Partie p)
     +void accepterPersonnage(Personnage personnage)
     +void validerEpisode(Episode e)
   }
-
   class Partie {
     -boolean dejaJouee
     -boolean validee
@@ -47,38 +42,33 @@ package "Model" #DDFFDD {
     +void supprimerPersonnage(Personnage p)
     +void jouer()
   }
+  class Aventure{
 
-  class Aventure
+  }
   class Biographie {
     -String titre
     -List<Episode> episodes
     +void ajouterEpisode(Episode e)
   }
-
   class Episode {
     -String titre
     -List<Paragraphe> paragraphes
     +void ajouterParagraphe(Paragraphe p)
     +void valider()
   }
-
   class Paragraphe {
     -String titre
     -boolean isPrivate
     +void rendrePublique()
   }
-
   abstract class Sujet {
     +attache(Observateur o)
     +detache(Observateur o)
     +informe()
   }
-
   interface Observateur {
     +miseAJour()
   }
-  ' diamond diamond1 
-  ' diamond diamond2 
 
   Sujet <|-- Partie
   Sujet <|-- Episode
@@ -90,29 +80,77 @@ package "Model" #DDFFDD {
 ' === VUE (View) ===
 ' =============================
 package "View" #DDEEFF {
-  class VuePartie {
-    +afficherPartie(Partie p)
+  package "joueur" {
+    class VueConnexion {
+    }
+
+    class VueJoueur {
+    }
+
+    class VueAccueil{
+    }
   }
-  class VueBiographie {
-    +afficherEpisodes(List<Episode> episodes)
+  package "biographie" {
+    class VueBiographie {
+    }
+
+    class VueAjouterParagraphe {
+
+    }
+
+    class VueModifierParagraphe {
+
+    }
   }
-  class VueEpisode {
-    +afficherParagraphes(List<Paragraphe> paragraphes)
+  package "partie" {
+    class VuePartie {
+    }
+
+    class VueAjouterPartie {
+
+    }
+
+    class VueModifierPartie {
+
+    }
   }
-  class VueParagraphe {
-    +afficherDetails()
-  }
-  class VueConnexion {
-    +afficherVueJoueur(String joueurName)
-  }
-  class VuePersonnage {
-    +afficherDetails(Personnage p)
-  }
-  class VueJoueur {
-    +afficherParties(List<Partie> parties)
+  package "personnage" {
+    class VuePersonnage {
+    }
+    
+    class VueAjouterPersonnage {
+
+    }
+
+    class VueModifierPersonnage {
+
+    }
   }
 
+  interface Vue {
+    +afficher()
+  }
+
+  class VueConfirmation {
+
+  }
+
+  Vue <|.. VueConfirmation
+  Vue <|.. VueConnexion
+  Vue <|.. VueJoueur
+  Vue <|.. VueAccueil
+  Vue <|.. VueBiographie
+  Vue <|.. VueAjouterParagraphe 
+  Vue <|.. VueModifierParagraphe
+  Vue <|.. VuePartie
+  Vue <|.. VueAjouterPartie
+  Vue <|.. VueModifierPartie
+  Vue <|.. VuePersonnage
+  Vue <|.. VueAjouterPersonnage
+  Vue <|.. VueModifierPersonnage
 }
+
+' Implémentation du partern observateur
 
 Observateur <|.. VuePartie
 Observateur <|.. VueEpisode
@@ -123,30 +161,109 @@ Observateur <|.. VueJoueur
 ' === CONTROLEUR (Controller) ===
 ' =============================
 package "Controller" #FFE4B5 {
-  class ControleurPartie {
-    +Partie creerPartie()
-    +void modifierPartie()
-  }
-  class ControleurJoueur {
-    +Joueur creerJoueur()
-    +void modifierJoueur()
-  }
-  class ControleurPersonnage {
-    +Personnage creerPersonnage()
-    +void modifierPersonnage()
-  }
-  class ControleurBiographie {
-    +Biographie creerBiographie()
-    +void modifierBiographie()
-  }
-}
+  package "joueur" {
+    class ControleurConnexion {
+    }
 
+    class ControleurJoueur {
+      +Joueur creerJoueur()
+      +void modifierJoueur(
+    }
+
+    class ControleurAccueil{
+    }
+  }
+  package "biographie" {
+    class ControleurBiographie {
+      +Biographie creerBiographie()
+      +void modifierBiographie()
+    }
+
+    class ControleurAjouterParagraphe {
+
+    }
+
+    class ControleurModifierParagraphe {
+
+    }
+  }
+  package "partie" {
+    class ControleurPartie {
+      +Partie creerPartie()
+      +void modifierPartie()
+    }
+
+    class ControleurAjouterPartie {
+
+    }
+
+    class ControleurModifierPartie {
+
+    }
+  }
+  package "personnage" {
+    class ControleurPersonnage {
+    }
+    
+    class ControleurAjouterPersonnage {
+      +Personnage creerPersonnage()
+      +void modifierPersonnage()
+    }
+
+    class ControleurModifierPersonnage {
+
+    }
+  }
+
+  enum Commande {
+    FERMER,
+    QUITTER,
+    RETOUR,
+    ACCEPTER,
+    REFUSER,
+  }
+
+  abstract class Controleur {
+    ~ abstract void handleLocalInput(String input);
+    + void processInput()
+    + void handleGlobalCommand(Commande cmd)
+  }
+
+  class ControleurConfirmation {
+
+  }
+
+  Controleur <|-- ControleurConfirmation
+  Controleur <|-- ControleurConnexion
+  Controleur <|-- ControleurJoueur
+  Controleur <|-- ControleurAccueil
+  Controleur <|-- ControleurBiographie
+  Controleur <|-- ControleurAjouterParagraphe 
+  Controleur <|-- ControleurModifierParagraphe
+  Controleur <|-- ControleurPartie
+  Controleur <|-- ControleurAjouterPartie
+  Controleur <|-- ControleurModifierPartie
+  Controleur <|-- ControleurPersonnage
+  Controleur <|-- ControleurAjouterPersonnage
+  Controleur <|-- ControleurModifierPersonnage
+
+  Controleur .. Commande
+  ControleurConfirmation .. Commande
+}
 ' === Relations MVC ===
 ControleurPartie --> Partie
 ControleurJoueur --> Joueur
 ControleurPersonnage --> Personnage
 ControleurBiographie --> Biographie
-ControleurJoueur --> MeneurJeu
+
+VuePartie ..|> Vue
+VueJoueur ..|> Vue
+VuePersonnage ..|> Vue
+VueBiographie ..|> Vue
+VueParagraphe ..|> Vue
+VueEpisode ..|> Vue
+VueConnexion ..|> Vue
+VueAccueil ..|> Vue
 
 VuePartie --> ControleurPartie
 VueJoueur --> ControleurJoueur
@@ -155,6 +272,7 @@ VueBiographie --> ControleurBiographie
 VueParagraphe --> ControleurBiographie
 VueEpisode --> ControleurBiographie
 VueConnexion --> ControleurJoueur
+VueAccueil --> ControleurJoueur
 
 VuePartie .[#blue].> Partie : observe >
 VueEpisode .[#blue].> Episode : observe >
@@ -219,14 +337,13 @@ package "Persistence" #FFF2CC {
   PartieDAO --> SQLiteManager
   ParagrapheDAO --> SQLiteManager
 
-  PersonnageDAO <-- Personnage : gère la persistance >
-  ParagrapheDAO <-- Episode
-  JoueurDAO <-- Joueur : gère la persistance >
-  PersonnageDAO <-- Joueur
-  PartieDAO <-- Joueur
-  ParagrapheDAO <-- Joueur
-  PartieDAO <-- Partie : gère la persistance >
-  ParagrapheDAO <-- Paragraphe : gère la persistance >
+  PersonnageDAO <-- ControleurPersonnage : gère la persistance >
+  JoueurDAO <-- ControleurJoueur : gère la persistance >
+  PersonnageDAO <-- ControleurJoueur
+  PartieDAO <-- ControleurJoueur
+  ParagrapheDAO <-- ControleurJoueur
+  PartieDAO <-- ControleurPartie : gère la persistance >
+  ParagrapheDAO <-- ControleurParagraphe : gère la persistance >
 }
 
 ' Alignement vertical (vue du haut vers le bas)

@@ -1,0 +1,1 @@
+executer le projet ```mvn compile exec:java```

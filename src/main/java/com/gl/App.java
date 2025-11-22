@@ -1,10 +1,11 @@
 package com.gl;
 
-/**
- * Hello world!
- */
+import com.gl.controller.joueur.ControleurAccueil;
+import com.gl.view.joueur.VueAccueil;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Routeur router = Routeur.getInstance();
+        router.start(new ControleurAccueil(router, new VueAccueil()));
     }
 }

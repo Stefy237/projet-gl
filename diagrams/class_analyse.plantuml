@@ -19,18 +19,15 @@ class Personnage {
     void supprimer()
     void setMeneurjeu(MeneurJeu newMeneurJeu)
 }
-class MeneurJeu {
-    void accepterPartie(Partie p)
-    void accepterPersonnage(Personage personnage)
-    void valliderEpisode(Episode e)
-}
 class Joueur {
     String nom
     void cederPersonnage(Joueur j)
     Personnage creerPersonnage(String nom, String naissanceDate, String profession, Biographie brographieInitiale)
     Partie proposerPartie(String titre, Univers univers, String resume)
     void proposerPersonnage(MeneurJeu m)
-    void valliderEpisode(Episode e)
+    void validerEpisode(Episode e)
+    void accepterPartie(Partie p)
+    void accepterPersonnage(Personage personnage)
 }
 class Partie {
     boolean jouee
@@ -61,15 +58,10 @@ class Paragraphe {
     void rendrePublique()
 }
 diamond diamond1
-diamond diamond2
 
 Joueur "0,*" -- diamond1
 Partie "1" -- diamond1
 Personnage "0,*" -- diamond1
-
-MeneurJeu "1" -- diamond2
-Partie "1" -- diamond2
-Personnage "0,*"-- diamond2
 
 Episode --* Biographie
 Paragraphe --* Episode
@@ -81,6 +73,5 @@ Personnage "1,*" --> "1,*" Aventure
 Personnage "1" -->" 1" Biographie 
 Partie .. Univers
 Personnage .. Univers
-MeneurJeu "0,*" --> "1" Joueur 
 
 @enduml

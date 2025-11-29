@@ -2,16 +2,21 @@
 actor Joueur
 actor MeneurJeu
 
-Joueur -> Vue_joueur: creer_personnage(nom,date de naissance,profession,portrait,biographie)
-Vue_joueur -> Controleur_joueur: handleRequest(args...)
-Controleur_joueur -> Personnage: create_personnage(non,date de naissance,profession,portrait,biographie)
+Joueur --> Vue_joueur: command_create(args...)
+Vue_joueur -> Controleur_joueur: creer_personnage(nom,date de naissance,profession,portrait,biographie)
+create Personnage
+Controleur_joueur -> Personnage: new(non,date de naissance,profession,portrait,biographie)
+
 Personnage --> Controleur_joueur: Personnage p
-Controleur_joueur -> Controleur_partie: ajouterPersonnage(p)
-Controleur_partie -> Vue_joueur: demande_confirmation()
-Vue_joueur->MeneurJeu: demande_confirmatio()
-MeneurJeu --> Vue_joueur: confirmaition
+Controleur_joueur --> Vue_joueur: Personnage p
+Joueur --> Vue_joueur: command_ajouter(args..)
+
+Vue_joueur -> Controleur_partie: ajouterPersonnage(p,args..)
+Controleur_partie --> Vue_joueur: demande_confirmation
+'Vue_joueur->MeneurJeu: demande_confirmation
+MeneurJeu --> Vue_joueur: commmand_confirmation(args...)
 Vue_joueur --> Controleur_partie: confirmation
-Controleur_partie -> Personnage: setMeneurJeu()
-Controleur_partie -> Partie : ajouter_personnage(p)
+Controleur_partie -> Personnage: setMeneurJeu(args...)
+Controleur_partie -> Partie : ajouter_personnage(p,args...)
 'Partie-> Controleur_partie: demande_confirmation()
 @enduml

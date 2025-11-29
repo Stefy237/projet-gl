@@ -1,0 +1,13 @@
+@startuml
+actor Joueur
+' actor MeneurJeu
+
+Joueur -> Vue_biographie: ajouter_episode(Episode(titre))
+Vue_biographie  -> Controleur_biographie : handleRequest()
+Controleur_biographie -> Episode: create_episode(titre)
+Episode --> Controleur_biographie: Episode E
+Controleur_biographie -> Biographie: ajouterEpisode(E)
+Biographie --> Controleur_biographie: confirmation d'ajout
+Controleur_biographie --> Vue_biographie: confirmation d'ajout
+
+@enduml

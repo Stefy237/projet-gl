@@ -1,0 +1,13 @@
+@startuml
+actor Joueur
+actor MeneurJeu
+
+Joueur -> Systeme: valider_episode(E)
+Systeme -> MeneurJeu: Demande_validation(E)
+MeneurJeu --> Systeme: confirmation_validaiton
+Systeme-->Joueur: validation
+
+
+/'Joueur -> Systeme: Another authentication Request'/
+/'Joueur <-- Systeme: Another authentication Response'/
+@enduml

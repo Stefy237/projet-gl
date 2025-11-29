@@ -1,0 +1,15 @@
+@startuml
+actor Joueur
+actor MeneurJeu
+
+Joueur -> Systeme: creer_personnage(nom,date de naissance,profession,portrait,biographie)
+Systeme --> Joueur: Personnage P
+Joueur -> Systeme: proposer_personnage(P)
+Systeme --> MeneurJeu: Demande_validation()
+MeneurJeu -> Systeme: validation
+Systeme --> Joueur: confirmation d'adhesion
+
+
+/'Joueur -> Systeme: Another authentication Request'/
+/'Joueur <-- Systeme: Another authentication Response'/
+@enduml

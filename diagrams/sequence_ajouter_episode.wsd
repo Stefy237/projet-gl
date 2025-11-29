@@ -1,0 +1,13 @@
+@startuml
+actor Joueur
+actor MeneurJeu
+
+Joueur -> Systeme: ajouter_episode(Episode(list<paragraphe>,aventure))
+Systeme --> Joueur: Confirmation_ajout(Episode E)
+Joueur -> Systeme: Sauvegarder(E)
+Systeme-->Joueur: Confirmation_sauvegarde
+
+
+/'Joueur -> Systeme: Another authentication Request'/
+/'Joueur <-- Systeme: Another authentication Response'/
+@enduml

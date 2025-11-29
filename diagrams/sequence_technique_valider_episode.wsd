@@ -1,0 +1,15 @@
+@startuml
+
+actor Joueur
+actor MeneurJeu
+
+Joueur -> Vue_biographie: valider_episode(E)
+Vue_biographie -> Controleur_biographie:handleRequest(E)
+Controleur_biographie -> Vue_joueur: Demande_validation()
+Vue_joueur--> MeneurJeu: demande_validation
+MeneurJeu --> Vue_joueur: validation
+Vue_joueur --> Controleur_biographie: validation
+Controleur_biographie -> Episode: valider(E)
+
+
+@enduml

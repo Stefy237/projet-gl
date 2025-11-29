@@ -1,0 +1,10 @@
+@startuml
+actor Joueur
+Joueur -> Systeme: Proposer_partie(titre, univers, resume initiale, date, lieu)
+Systeme --> Joueur: Partie P
+Systeme -> Systeme: Notification(Partie P)
+
+
+/'Joueur -> Systeme: Another authentication Request'/
+/'Joueur <-- Systeme: Another authentication Response'/
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+actor Joueur
+actor MeneurJeu
+
+Joueur -> Vue_joueur: creer_personnage(nom,date de naissance,profession,portrait,biographie)
+Vue_joueur -> Controleur_joueur: handleRequest(args...)
+Controleur_joueur -> Personnage: create_personnage(non,date de naissance,profession,portrait,biographie)
+Personnage --> Controleur_joueur: Personnage p
+Controleur_joueur -> Controleur_partie: ajouterPersonnage(p)
+Controleur_partie -> Vue_joueur: demande_confirmation()
+Vue_joueur->MeneurJeu: demande_confirmatio()
+MeneurJeu --> Vue_joueur: confirmaition
+Vue_joueur --> Controleur_partie: confirmation
+Controleur_partie -> Personnage: setMeneurJeu()
+Controleur_partie -> Partie : ajouter_personnage(p)
+'Partie-> Controleur_partie: demande_confirmation()
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+actor Joueur
+Joueur -> Vue_joueur: Proposer_partie(titre, univers, resume initiale, date, lieu)
+Vue_joueur -> Controleur_partie: handleRequest(args...)
+Controleur_partie-> Partie: create_partie(args...)
+Partie --> Controleur_partie: confirmation creation
+Controleur_partie--> Vue_joueur: Notification de partie disponible
+
+
+
+@enduml

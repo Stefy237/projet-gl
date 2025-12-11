@@ -3,12 +3,11 @@ package com.gl.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gl.persistence.PartieDAO;
-
 public class Partie extends Sujet {
-    String titre;
-    Univers univers;
-    String resume;
+    private int id;
+    private String titre;
+    private Univers univers;
+    private String resume;
     private boolean dejaJouee;
     private boolean validee;
     private List<Personnage> personnages = new ArrayList<>();
@@ -39,5 +38,61 @@ public class Partie extends Sujet {
 
     public void jouer() {
         this.dejaJouee = true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public Univers getUnivers() {
+        return univers;
+    }
+
+    public void setUnivers(Univers univers) {
+        this.univers = univers;
+    }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
+    }
+
+    public boolean isDejaJouee() {
+        return dejaJouee;
+    }
+
+    public void setDejaJouee(boolean dejaJouee) {
+        this.dejaJouee = dejaJouee;
+    }
+
+    public boolean isValidee() {
+        return validee;
+    }
+
+    public void setValidee(boolean validee) {
+        this.validee = validee;
+    }
+
+    public List<Personnage> getPersonnages() {
+        return personnages;
+    }
+
+    public void setPersonnages(List<Personnage> personnages) {
+        this.personnages = personnages;
     }
 }

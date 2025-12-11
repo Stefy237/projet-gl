@@ -22,7 +22,7 @@ public class ControleurConnexion extends Controleur {
             processInput();
         }
 
-        routeur.push(new ControleurJoueur(routeur, new VueJoueur(), joueur));
+        routeur.push(new ControleurJoueur(routeur, new VueJoueur(joueur), joueur));
     }
     
 }

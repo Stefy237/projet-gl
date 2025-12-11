@@ -260,12 +260,13 @@ VuePartie --> ControleurPartie
 VueJoueur --> ControleurJoueur
 VuePersonnage --> ControleurPersonnage
 VueBiographie --> ControleurBiographie
-VueEpisode --> ControleurBiographie
 VueConnexion --> ControleurJoueur
 VueAccueil --> ControleurJoueur
 
 VuePartie .[#blue].> Partie : observe >
-VueEpisode .[#blue].> Episode : observe >
+VueBiographie .[#blue].> Biographie : observe >
+VueBiographie .[#blue].> Episode : observe >
+VueBiographie .[#blue].> Paragraphe : observe >
 VueJoueur .[#blue].> Joueur : observe >
 
 ' =============================

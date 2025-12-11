@@ -5,7 +5,7 @@ import com.gl.view.Vue;
 public class VueAccueil implements Vue {
 
     String texteAccueil = """
-            ==================== Bienvenue sur notre plateforme de roliste =======================
+             ==================== Bienvenue sur notre plateforme de roliste ======================= 
             ---------------------------------------------------------------------------------------
             COMMANDES GLOBABLES : Ces commandes fonctionne tout le long du programme
                 - x : pour fermer l'application
@@ -20,7 +20,7 @@ public class VueAccueil implements Vue {
 
     @Override
     public void afficher() {
-        System.out.println(texteAccueil);
+        System.out.println("\n" + texteAccueil + "\n");
     }
     
 }

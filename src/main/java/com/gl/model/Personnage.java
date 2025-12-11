@@ -1,9 +1,8 @@
 package com.gl.model;
 
-import com.gl.persistence.ParagrapheDAO;
-import com.gl.persistence.PersonnageDAO;
-
 public class Personnage {
+    private int id; // pour les requêtes SQL
+
     private String nom;
     private String profession;
     private String naissanceDate;
@@ -11,7 +10,7 @@ public class Personnage {
 
     private Univers univers;
     private Biographie biographie;
-
+    private Partie partie;
 
     public Personnage(String nom, String profession, String naissanceDate, Univers univers, Biographie biographie) {
         this.nom = nom;
@@ -58,5 +57,21 @@ public class Personnage {
 
     public void setBiographie(Biographie biographie) {
         this.biographie = biographie;
+    }
+
+    public Partie getPartie() {
+        return partie;
+    }
+
+    public void setPartie(Partie partie) {
+        this.partie = partie;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

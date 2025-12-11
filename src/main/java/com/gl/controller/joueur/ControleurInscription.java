@@ -18,7 +18,14 @@ public class ControleurInscription extends Controleur {
 
     @Override
     protected void handleLocalInput(String input) {
-        if (input.isEmpty()) return;
+        if (input.isEmpty()) {
+            System.out.println("Veuillez entrer un nom/pseudo valide");
+            processInput();
+        }
+        if(joueurDAO.findByName(input) != null) {
+            System.out.println("Pseudo déja utilisé. Veuillez un choisir un nouveau");
+            processInput();
+        }
 
         Runnable handleSave = () -> {
             Joueur joueur = new Joueur(input);

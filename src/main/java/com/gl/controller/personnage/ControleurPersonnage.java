@@ -3,20 +3,29 @@ package com.gl.controller.personnage;
 import com.gl.model.Joueur;
 import com.gl.model.Personnage;
 import com.gl.model.Univers;
+import com.gl.view.Vue;
+import com.gl.Routeur;
+import com.gl.controller.Controleur;
 import com.gl.model.Biographie;
 
-public class ControleurPersonnage {
-    private Joueur joueur;
+public class ControleurPersonnage extends Controleur {
 
-    public ControleurPersonnage(Joueur joueur) {
-        this.joueur = joueur;
+    public ControleurPersonnage(Routeur routeur, Vue vue, Personnage personnage) {
+        super(routeur, vue);
+        this.personnage=personnage;
+        //TODO Auto-generated constructor stub
     }
 
-    public Personnage creerPersonnage(String nom, String naissance, String profession, Univers univers, Biographie bio) {
-        return joueur.creerPersonnage(nom, naissance, profession, univers, bio);
+
+    private Personnage personnage;
+
+    
+
+    @Override
+    protected void handleLocalInput(String input) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleLocalInput'");
     }
 
-    public void modifierPersonnage(Personnage p) {
-        
-    }
+
 }

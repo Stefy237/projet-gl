@@ -1,10 +1,16 @@
 @startuml
 actor Joueur
-Joueur -> Vue_joueur: Proposer_partie(titre, univers, resume initiale, date, lieu)
-Vue_joueur -> Controleur_partie: handleRequest(args...)
-Controleur_partie-> Partie: create_partie(args...)
-Partie --> Controleur_partie: confirmation creation
-Controleur_partie--> Vue_joueur: Notification de partie disponible
+
+Joueur -> Vue_joueur: command_proposer(args...)
+Vue_joueur -> Controleur_partie: command_proposer(args...)
+activate Controleur_partie
+Controleur_partie -> Controleur_partie : Proposer_partie(titre, univers, resume initiale, date, lieu)
+create Partie
+
+Controleur_partie-> Partie: new(args...)
+deactivate Controleur_partie
+Partie --> Controleur_partie: Partie P
+Controleur_partie--> Vue_joueur: Partie P
 
 
 

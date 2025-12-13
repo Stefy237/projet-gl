@@ -56,7 +56,7 @@ public class PersonnageDAO implements DAO<Personnage> {
         return personnage;
     }
 
-    public Personnage findById(int id, Connection conn) { 
+    public  Personnage findById(int id, Connection conn) { 
         String sql = "SELECT p.nom, p.profession, p.date_naissance, p.univers_id, p.biogragie_id, p.image_path, " +
                      "pa.joueur_id AS relatedJoueurId, pa.mj_id AS relatedMjId " +
                      "FROM Personnage p " +

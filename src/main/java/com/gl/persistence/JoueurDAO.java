@@ -89,6 +89,7 @@ public class JoueurDAO implements DAO<Joueur> {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, entity.getPseudo());
+            pstmt.setInt(2, entity.getId());
 
             pstmt.executeUpdate();
 
@@ -129,7 +130,8 @@ public class JoueurDAO implements DAO<Joueur> {
                     
                     joueur = new Joueur(pseudo);
                     joueur.setId(id);
-                    findPersonnagesByJoueur(joueur);
+                    List<Personnage> personnages = findPersonnagesByJoueur(joueur, conn);
+                    joueur.setPersonnages(personnages);
                 }
             }
 
@@ -139,23 +141,25 @@ public class JoueurDAO implements DAO<Joueur> {
         return joueur;
     }
 
-    public List<Personnage> findPersonnagesByJoueur(Joueur joueur) {
+    public List<Personnage> findPersonnagesByJoueur(Joueur joueur, Connection conn) {
         PersonnageDAO personnageDAO = new PersonnageDAO();
         PartieDAO partieDAO = new PartieDAO();
         List<Personnage> personnages = new ArrayList<>();
         String sql = "SELECT  partie_id, personnage_id FROM Participation WHERE joueur_id = ? ";
         
-        try (Connection conn = SQLiteManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, joueur.getId());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while(rs.next()) {
                     int partieId = rs.getInt("partie_id");
-                    Personnage personnage = personnageDAO.findById(rs.getInt("personnage_id"));
-                    personnage.setPartie(partieDAO.findById(partieId));
+                    Personnage personnage = personnageDAO.findById(rs.getInt("personnage_id"), conn);
+                    Partie partie = partieDAO.findById(partieId, conn);
+                    if (personnage != null && partie != null) {
+                    personnage.setPartie(partie);
                     personnages.add(personnage);
+                    }
                 }
             } 
         } catch (SQLException e) {

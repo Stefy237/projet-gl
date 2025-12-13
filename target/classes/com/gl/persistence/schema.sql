@@ -3,14 +3,14 @@ PRAGMA foreign_keys = OFF;
 -- ============================================================
 -- NETTOYAGE (DML)
 -- ============================================================
-DELETE FROM Paragraphe;
-DELETE FROM Episode;
-DELETE FROM Biographie;
-DELETE FROM Participation;
-DELETE FROM Personnage;
-DELETE FROM Partie;
-DELETE FROM Joueur;
-DELETE FROM Univers;
+-- DELETE FROM Paragraphe;
+-- DELETE FROM Episode;
+-- DELETE FROM Biographie;
+-- DELETE FROM Participation;
+-- DELETE FROM Personnage;
+-- DELETE FROM Partie;
+-- DELETE FROM Joueur;
+-- DELETE FROM Univers;
 
 -- ============================================================
 -- CRÉATION DU SCHÉMA (DDL)
@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Partie (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titre TEXT,
     resume TEXT,
+    validee INTEGER DEFAULT 0, -- Booléen : 0 = faux, 1 = vrai
     jouee INTEGER DEFAULT 0, -- Booléen : 0 = faux, 1 = vrai
     univers_id INTEGER,
     FOREIGN KEY (univers_id) REFERENCES Univers(id)

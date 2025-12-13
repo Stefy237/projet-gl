@@ -8,27 +8,32 @@ INSERT INTO Joueur (id, nom) VALUES
 (6, 'Frank'), (7, 'Grace'), (8, 'Heidi'), (9, 'Ivan'), (10, 'Judy');
 
 -- 3. PARTIES (20 entrées)
-INSERT INTO Partie (titre, resume, jouee, univers_id) VALUES
-('La Quête de l''Anneau', 'Un classique indémodable.', 1, 1),
-('Les Cavernes du Chaos', 'Exploration de donjon.', 0, 1),
-('Le Roi Sombre', 'Campagne politique.', 1, 1),
-('Chasse aux Dragons', 'Gros monstres et trésors.', 0, 1),
-('Neon City Blues', 'Enquête sous la pluie acide.', 1, 2),
-('Corpo War', 'Sabotage industriel.', 0, 2),
-('Netrunner Legacy', 'Tout se passe dans le cyberespace.', 1, 2),
-('Blade Runner Dreams', 'Chasse aux androïdes.', 0, 2),
-('L''Appel de Cthulhu', 'Tout le monde meurt à la fin.', 1, 3),
-('Cauchemar à Innsmouth', 'Des poissons bizarres.', 0, 3),
-('Le Roi en Jaune', 'Une pièce de théâtre maudite.', 1, 3),
-('La Montagne Hallucinée', 'Il fait froid.', 0, 3),
-('Star Wars: Bordure Ext.', 'Contrebande spatiale.', 1, 4),
-('Dune: Arrakis', 'Le culte de l''épice.', 0, 4),
-('Mass Effect: Relay', 'Diplomatie galactique.', 1, 4),
-('Alien Isolation', 'Survival horror dans l''espace.', 0, 4),
-('Mad Max: Fury Road', 'Voitures et sable.', 1, 5),
-('Fallout: New Vegas', 'Le désert radioactif.', 0, 5),
-('Zombie Survival', 'Survivre jour après jour.', 1, 5),
-('Metro 2033', 'Vie dans les tunnels.', 0, 5);
+INSERT INTO Partie (titre, resume, jouee, univers_id, validee) VALUES
+-- Univ 1
+('La Quête de l''Anneau', 'Un classique indémodable.', 1, 1, 1),
+('Les Cavernes du Chaos', 'Exploration de donjon.', 0, 1, 0),     
+('Le Roi Sombre', 'Campagne politique.', 1, 1, 1),              
+('Chasse aux Dragons', 'Gros monstres et trésors.', 0, 1, 0),     
+-- Univ 2
+('Neon City Blues', 'Enquête sous la pluie acide.', 1, 2, 1),
+('Corpo War', 'Sabotage industriel.', 0, 2, 0),                   
+('Netrunner Legacy', 'Tout se passe dans le cyberespace.', 1, 2, 0), 
+('Blade Runner Dreams', 'Chasse aux androïdes.', 0, 2, 0),       
+-- Univ 3
+('L''Appel de Cthulhu', 'Tout le monde meurt à la fin.', 1, 3, 1), 
+('Cauchemar à Innsmouth', 'Des poissons bizarres.', 0, 3, 0),    
+('Le Roi en Jaune', 'Une pièce de théâtre maudite.', 1, 3, 1),
+('La Montagne Hallucinée', 'Il fait froid.', 0, 3, 0),           
+-- Univ 4
+('Star Wars: Bordure Ext.', 'Contrebande spatiale.', 1, 4, 1),
+('Dune: Arrakis', 'Le culte de l''épice.', 0, 4, 0),             
+('Mass Effect: Relay', 'Diplomatie galactique.', 1, 4, 1),   
+('Alien Isolation', 'Survival horror dans l''espace.', 0, 4, 0), 
+-- Univ 5
+('Mad Max: Fury Road', 'Voitures et sable.', 1, 5, 1),       
+('Fallout: New Vegas', 'Le désert radioactif.', 0, 5, 0),        
+('Zombie Survival', 'Survivre jour après jour.', 1, 5, 1),   
+('Metro 2033', 'Vie dans les tunnels.', 0, 5, 0);
 
 
 -- 4. BIOGRAPHIES (30 entrées)

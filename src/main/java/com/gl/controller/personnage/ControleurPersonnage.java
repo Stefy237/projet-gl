@@ -3,20 +3,29 @@ package com.gl.controller.personnage;
 import com.gl.model.Joueur;
 import com.gl.model.Personnage;
 import com.gl.model.Univers;
+import com.gl.persistence.JoueurDAO;
+import com.gl.persistence.PersonnageDAO;
+import com.gl.view.Vue;
+import com.gl.Routeur;
+import com.gl.controller.Controleur;
 import com.gl.model.Biographie;
 
-public class ControleurPersonnage {
-    private Joueur joueur;
+public class ControleurPersonnage extends Controleur {
+    private Personnage personnage;
 
-    public ControleurPersonnage(Joueur joueur) {
-        this.joueur = joueur;
+    private PersonnageDAO personnageDAO = new PersonnageDAO();
+
+    public ControleurPersonnage(Routeur routeur, Vue vue, Personnage personnage) {
+        super(routeur, vue);
+        this.personnage = personnage;
     }
 
-    public Personnage creerPersonnage(String nom, String naissance, String profession, Univers univers, Biographie bio) {
-        return joueur.creerPersonnage(nom, naissance, profession, univers, bio);
+    @Override
+    protected void handleLocalInput(String input) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleLocalInput'");
     }
 
-    public void modifierPersonnage(Personnage p) {
-        
-    }
+
+
 }

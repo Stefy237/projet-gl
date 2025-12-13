@@ -89,6 +89,8 @@ public class PersonnageDAO implements DAO<Personnage> {
             } 
         } catch (SQLException e) {
             e.printStackTrace();
+
+            personnage = null;
         }
 
         return personnage;

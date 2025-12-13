@@ -58,6 +58,8 @@ public class PartieDAO implements DAO<Partie> {
         } catch (SQLException e) {
             System.err.println("Erreur FindById Partie : " + e.getMessage());
             e.printStackTrace();
+
+            partie = null;
         }
         return partie;
     }
@@ -101,6 +103,8 @@ public class PartieDAO implements DAO<Partie> {
         } catch (SQLException e) {
             System.err.println("Erreur FindById Partie : " + e.getMessage());
             e.printStackTrace();
+
+            partie = null;
         }
         return partie;
     }

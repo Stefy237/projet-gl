@@ -113,13 +113,12 @@ public class JoueurDAO implements DAO<Joueur> {
         }
     }
     
-    // Méthode spécifique non présente dans l'interface générique DAO
     public Joueur findByName(String name) {
         String sql = "SELECT id, nom FROM Joueur WHERE nom = ? COLLATE NOCASE";
         Joueur joueur = null;
 
         try (Connection conn = SQLiteManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) { 
 
             pstmt.setString(1, name);
             
@@ -130,14 +129,19 @@ public class JoueurDAO implements DAO<Joueur> {
                     
                     joueur = new Joueur(pseudo);
                     joueur.setId(id);
+                    
                     List<Personnage> personnages = findPersonnagesByJoueur(joueur, conn);
                     joueur.setPersonnages(personnages);
                 }
             }
-
-        } catch (SQLException e) {
-            System.out.println("Erreur FindByName : " + e.getMessage());
+        
+        } catch (SQLException e) { 
+            System.err.println("ERREUR DB lors de la recherche du joueur '" + name + "'.");
+            e.printStackTrace(); 
+            
+            joueur = null; 
         }
+        
         return joueur;
     }
 

@@ -58,17 +58,39 @@ UPDATE Biographie SET titre = 'La vie de ' || (SELECT nom FROM Personnage WHERE 
 
 
 -- 6. PARTICIPATION (Association Joueur-Personnage-Partie)
--- MJ Alterné, Personnage N° J.id, Partie N° J.id
+-- Chaque joueur (J.id) participe à 5 parties différentes (P.id) avec 5 personnages différents (PERSO.id)
+DELETE FROM Participation;
+
+-- ==========================================================
+-- LOGIQUE D'INSERTION : JOINTURE CROISÉE ET FILTRAGE (50 lignes garanties)
+-- ==========================================================
+-- Nous allons joindre Joueur (J) avec une séquence numérique (N) de 0 à 4.
+-- Ceci garantit 5 lignes de base pour chaque joueur (10 joueurs * 5 lignes = 50 lignes).
+WITH Séquence5 (n) AS (
+    SELECT 0 UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+)
 INSERT INTO Participation (joueur_id, mj_id, partie_id, personnage_id)
-SELECT 
-    J.id AS joueur_id, 
-    CASE WHEN J.id % 2 = 1 THEN (J.id + 1) ELSE J.id END AS mj_id,
-    P.id AS partie_id,
-    PERSO.id AS personnage_id
+SELECT
+    J.id AS joueur_id,
+
+    -- 1. MJ ID: Fait tourner l'ID du MJ parmi les 10 joueurs
+    -- MJ_ID = (ID_joueur + N) % 10 + 1 (Assure que l'ID est toujours entre 1 et 10)
+    ((J.id + S.n) % 10) + 1 AS mj_id,
+
+    -- 2. PARTIE ID: Fait tourner l'ID de la Partie parmi les 20 parties disponibles
+    -- PARTIE_ID = (ID_joueur + N * 2) % 20 + 1
+    -- On multiplie par 2 pour que les IDs de partie progressent plus vite et évitent les doublons immédiats
+    ((J.id + S.n * 2) % 20) + 1 AS partie_id,
+
+    -- 3. PERSONNAGE ID: Fait tourner l'ID du Personnage parmi les 30 personnages
+    -- PERSO_ID = (ID_joueur * 5 + N) % 30 + 1
+    ((J.id * 5 + S.n) % 30) + 1 AS personnage_id
+    
 FROM Joueur J
-JOIN Partie P ON P.id = J.id
-JOIN Personnage PERSO ON PERSO.id = J.id
-WHERE PERSO.univers_id = P.univers_id AND J.id <= 10;
+CROSS JOIN Séquence5 S
+-- WHERE pour s'assurer qu'un joueur n'est pas son propre MJ, 
+-- mais pour la robustesse des données de test, nous le permettons.
+;
 
 -- 7. ÉPISODES (150 épisodes, 5 par Biographie)
 INSERT INTO Episode (titre, biographie_id, aventure_id)

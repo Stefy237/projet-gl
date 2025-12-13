@@ -166,6 +166,8 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
             
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'extraction de l'épisode: " + e.getMessage());
+
+            episode = null;
         }
         
         return episode;

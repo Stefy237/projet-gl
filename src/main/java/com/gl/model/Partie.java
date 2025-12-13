@@ -12,7 +12,8 @@ public class Partie extends Sujet {
     private boolean validee;
     private List<Personnage> personnages = new ArrayList<>();
 
-
+    public Partie(){}
+    
     public Partie(String titre, Univers univers, String resume) {
         this.titre = titre;
         this.univers = univers;

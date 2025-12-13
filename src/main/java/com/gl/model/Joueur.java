@@ -8,13 +8,14 @@ public class Joueur extends Sujet {
 
     private String pseudo;
     private List<Personnage> personnages = new ArrayList<>();
+    private List<Partie> partieMJ = new ArrayList<>();
 
     public Joueur(String pseudo) {
         this.pseudo = pseudo;
     }
 
     public Personnage creerPersonnage(String nom, String naissanceDate, String profession, Univers univers,  Biographie bioInitiale) {
-        Personnage p = new Personnage(nom, naissanceDate, profession, univers, bioInitiale);
+        Personnage p = new Personnage(nom, naissanceDate, profession, univers, bioInitiale.getId(), this.id);
         informe(); 
         return p;
     }
@@ -31,10 +32,10 @@ public class Joueur extends Sujet {
 
     /**
      * Uniquement pour les joueurs qui ont le rôle de meneur de jeu dans une partie 
-     * @param p : Partie
+     * @param partie : Partie
      */
-    public void accepterPartie(Partie p) {
-        // logique d’acceptation
+    public void accepterPartie(Partie partie) {
+        partieMJ.add(partie);
     }
 
     /**
@@ -42,10 +43,20 @@ public class Joueur extends Sujet {
      * @param personnage
      */
     public void accepterPersonnage(Personnage personnage) {
-        // logique d’acceptation
+        personnage.setRelatedMjId(this.id);
     }
 
-    public void validerEpisode(Episode e) {
+    public void cederPersonnage(Personnage personnage, Joueur joueur) {
+        personnage.setRelatedJoueurId(joueur.id);
+    }
+
+    public void changerMJ(Personnage personnage, Joueur joueur) {
+        personnage.setRelatedMjId(joueur.id);
+    }
+
+    public void validerEpisode(Episode episode) {
+        //verifier si le joueur courant est propriétaire du joueur dont c'est l'épisode ou le MJ; appliquer la méthode correspondante
+        // if(episode.getRelatedBiographie().ge)
     }
 
     public int getId() {

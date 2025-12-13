@@ -6,11 +6,11 @@ import com.gl.view.joueur.VueAccueil;
 
 public class App {
     public static void main(String[] args) {
-        SQLiteManager.initialize();
+        // SQLiteManager.initialize();
 
         // Pour peupler automatiquement les tables via le code java -- Veuillez décommenter cette commande
         // ATTENTION : À NE FAIRE QU'UNE SEULE FOIS
-        SQLiteManager.loadTestData();
+        // SQLiteManager.loadTestData();
 
         Routeur routeur = Routeur.getInstance();
         routeur.start(new ControleurAccueil(routeur, new VueAccueil()));

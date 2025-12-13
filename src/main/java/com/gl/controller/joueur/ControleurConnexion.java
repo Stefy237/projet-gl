@@ -16,7 +16,7 @@ public class ControleurConnexion extends Controleur {
 
     @Override
     protected void handleLocalInput(String input) {
-        Joueur joueur = joueurDAO.findByName(input);
+        Joueur joueur = joueurDAO.findByName(input.trim());
         if(joueur == null) {
             System.out.println("Ce joueur n'existe pas. Veuillez entrer un nom/pseudo valide");
             processInput();

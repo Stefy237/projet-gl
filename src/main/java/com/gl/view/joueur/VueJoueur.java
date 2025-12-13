@@ -23,6 +23,7 @@ public class VueJoueur implements Observateur, Vue {
 
     @Override
     public void afficher() {
+        System.out.println("======================= BIENVENUE " + joueur.getPseudo() + " ========================");
         System.out.println("Partie | Partie id | Personnage | Personnage id");
 
         for(Personnage personnage : joueur.getPersonnages()) {
@@ -43,8 +44,8 @@ public class VueJoueur implements Observateur, Vue {
         return joueur;
     }
 
-    public void setJoueur(Joueur joueur) {
-        this.joueur = joueur;
-    }
+    // public void setJoueur(Joueur joueur) {
+    //     this.joueur = joueur;
+    // }
     
 }

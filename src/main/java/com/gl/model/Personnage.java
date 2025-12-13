@@ -9,28 +9,28 @@ public class Personnage {
     private String image;
 
     private Univers univers;
-    private Biographie biographie;
+    private int biographieId;
     private Partie partie;
 
-    public Personnage(String nom, String profession, String naissanceDate, Univers univers, Biographie biographie) {
+    private int relatedJoueurId;
+    private int relatedMjId;
+
+    public Personnage(String nom, String profession, String naissanceDate, Univers univers, int biographieId, int relatedJoueurId) {
         this.nom = nom;
         this.profession = profession;
         this.naissanceDate = naissanceDate;
         this.univers = univers;
-        this.biographie = biographie;
-    }
-
-    public void setProfession(String newProfession) {
-        this.profession = newProfession;
-    }
-
-    public void supprimer() {
-        // Logique de suppression
+        this.biographieId = biographieId;
+        this.relatedJoueurId = relatedJoueurId;
     }
 
     // Getters / Setters
     public String getNom() { 
         return nom; 
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
     public String getProfession() { 
@@ -51,14 +51,6 @@ public class Personnage {
         this.image = image;
     }
 
-    public Biographie getBiographie() {
-        return biographie;
-    }
-
-    public void setBiographie(Biographie biographie) {
-        this.biographie = biographie;
-    }
-
     public Partie getPartie() {
         return partie;
     }
@@ -73,5 +65,41 @@ public class Personnage {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setNaissanceDate(String naissanceDate) {
+        this.naissanceDate = naissanceDate;
+    }
+
+    public void setUnivers(Univers univers) {
+        this.univers = univers;
+    }
+
+    public int getBiographieId() {
+        return biographieId;
+    }
+
+    public void setBiographieId(int biographieId) {
+        this.biographieId = biographieId;
+    }
+
+    public int getRelatedJoueurId() {
+        return relatedJoueurId;
+    }
+
+    public void setRelatedJoueurId(int relatedJoueurId) {
+        this.relatedJoueurId = relatedJoueurId;
+    }
+
+    public int getRelatedMjId() {
+        return relatedMjId;
+    }
+
+    public void setRelatedMjId(int relatedMjId) {
+        this.relatedMjId = relatedMjId;
     }
 }

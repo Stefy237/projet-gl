@@ -3,10 +3,21 @@ actor Joueur
 actor MeneurJeu
 
 Joueur --> Vue_joueur: command_create(args...)
-Vue_joueur -> Controleur_joueur: creer_personnage(nom,date de naissance,profession,portrait,biographie)
+activate Vue_joueur
+Vue_joueur --> Controleur_joueur: command(args...)
+deactivate Vue_joueur
+
+
+activate Controleur_joueur
+Controleur_joueur -> Controleur_joueur  : creer_personnage(nom,date de naissance,profession,portrait,biographie)
+'deactivate Controleur_joueur
+
+
+
+
 create Personnage
 Controleur_joueur -> Personnage: new(non,date de naissance,profession,portrait,biographie)
-
+deactivate Controleur_joueur
 Personnage --> Controleur_joueur: Personnage p
 Controleur_joueur --> Vue_joueur: Personnage p
 Joueur --> Vue_joueur: command_ajouter(args..)

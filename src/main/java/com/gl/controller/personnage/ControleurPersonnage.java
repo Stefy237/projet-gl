@@ -93,7 +93,7 @@ public class ControleurPersonnage extends Controleur {
 
             case "go_partie":
                 Partie partie = partieDAO.findById(personnage.getPartieId());
-                // routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
+                routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
                 break;
         
             default:

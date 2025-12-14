@@ -1,34 +1,53 @@
 package com.gl.controller.partie;
 
+import java.util.Scanner;
+
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.personnage.ControleurAjouterPersonnage;
+import com.gl.controller.personnage.ControleurPersonnage;
 import com.gl.model.Partie;
+import com.gl.model.Personnage;
 import com.gl.model.Univers;
+import com.gl.persistence.PartieDAO;
+import com.gl.persistence.PersonnageDAO;
 import com.gl.view.Vue;
+import com.gl.view.partie.VueAjouterPartie;
+import com.gl.view.partie.VueModifierPartie;
+import com.gl.view.personnage.VueAjouterPersonnage;
+import com.gl.view.personnage.VuePersonnage;
 
 public class ControleurPartie extends Controleur{
     private Partie partie;
 
-    public ControleurPartie(Routeur routeur, Vue vue) {
+    Scanner scanner = new Scanner(System.in);
+
+    public ControleurPartie(Routeur routeur, Vue vue, Partie partie) {
         super(routeur, vue);
-        //TODO Auto-generated constructor stub
+        this.partie = partie;
     }
-
-    // public ControleurPartie(Partie partie) {
-    //     this.partie = partie;
-    // }
-
-    public Partie creerPartie(String titre, Univers univers, String resume) {
-        return new Partie(titre, univers, resume);
-    }
-
-    public void modifierPartie(Partie partie) {
-        
-    }
-
+    
     @Override
     protected void handleLocalInput(String input) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleLocalInput'");
+
+        PersonnageDAO personnageDAO = new PersonnageDAO();
+        switch (input) {
+            case "1":
+                routeur.push(new ControleurModifierPartie(routeur,new VueModifierPartie(),partie));
+                break;
+            
+            case "2":
+                System.out.println("entrez l'id du personnage");
+                int id = scanner.nextInt();
+                Personnage personnage = personnageDAO.findById(id);
+                routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
+                
+                break;
+
+        
+            default:
+                System.out.println("Veullez saisir une entrée valide");
+                processInput();
+        }
     }
 }

@@ -2,12 +2,17 @@
 actor Joueur
 actor MeneurJeu
 
+
 Joueur -> Systeme: creer_personnage(nom,date de naissance,profession,portrait,biographie)
+activate Systeme
 Systeme --> Joueur: Personnage P
+deactivate Systeme
 Joueur -> Systeme: proposer_personnage(P)
-Systeme --> MeneurJeu: Demande_validation()
-MeneurJeu -> Systeme: validation
+Systeme --> MeneurJeu: Demande_validation
+MeneurJeu --> Systeme: validation
+activate Systeme
 Systeme --> Joueur: confirmation d'adhesion
+deactivate Systeme
 
 
 /'Joueur -> Systeme: Another authentication Request'/

@@ -10,7 +10,10 @@ import java.util.List;
 public class PersonnageDAO implements DAO<Personnage> {
     
     @Override
-    public void save(Personnage p) {
+    public int save(Personnage p) {
+        int id = -1;
+
+        return id;
         // ... (Méthode save existante)
     }
 
@@ -18,8 +21,8 @@ public class PersonnageDAO implements DAO<Personnage> {
     public Personnage findById(int id) { 
         // NOTE: Nous utilisons LEFT JOIN pour récupérer les IDs du Joueur et du MJ 
         // depuis la table Participation.
-        String sql = "SELECT p.nom, p.profession, p.date_naissance, p.univers_id, p.biogragie_id, p.image_path, " +
-                     "pa.joueur_id AS relatedJoueurId, pa.mj_id AS relatedMjId " +
+        String sql = "SELECT p.nom, p.profession, p.date_naissance, p.image_path, p.univers_id, p.biogragie_id,  " +
+                     "pa.joueur_id , pa.mj_id, partie_id  " +
                      "FROM Personnage p " +
                      "LEFT JOIN Participation pa ON p.id = pa.personnage_id " +
                      "WHERE p.id = ?";
@@ -40,57 +43,19 @@ public class PersonnageDAO implements DAO<Personnage> {
                     int biographieId = rs.getInt("biogragie_id"); 
                     String imagePath = rs.getString("image_path");
                     
-                    int relatedJoueurId = rs.getInt("relatedJoueurId"); 
-                    int relatedMjId = rs.getInt("relatedMjId"); 
+                    int relatedJoueurId = rs.getInt("joueur_id"); 
+                    int relatedMjId = rs.getInt("mj_id"); 
+                    int partieId= rs.getInt("partie_id"); 
 
                     personnage = new Personnage(nom, profession, naissanceDate, Univers.getById(universId), biographieId, relatedJoueurId);
                     personnage.setId(id);
                     personnage.setImage(imagePath);
                     personnage.setRelatedMjId(relatedMjId);
+                    personnage.setPartieId(partieId);
                 }
             } 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        return personnage;
-    }
-
-    public Personnage findById(int id, Connection conn) { 
-        String sql = "SELECT p.nom, p.profession, p.date_naissance, p.univers_id, p.biogragie_id, p.image_path, " +
-                     "pa.joueur_id AS relatedJoueurId, pa.mj_id AS relatedMjId " +
-                     "FROM Personnage p " +
-                     "LEFT JOIN Participation pa ON p.id = pa.personnage_id " +
-                     "WHERE p.id = ?";
-                     
-        Personnage personnage = null;
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setInt(1, id);
-            
-            try (ResultSet rs = stmt.executeQuery()) {
-                if(rs.next()) {
-                    String nom = rs.getString("nom");
-                    String profession = rs.getString("profession");
-                    String naissanceDate = rs.getString("date_naissance");
-                    int universId = rs.getInt("univers_id");
-                    int biographieId = rs.getInt("biogragie_id"); 
-                    String imagePath = rs.getString("image_path");
-                    
-                    int relatedJoueurId = rs.getInt("relatedJoueurId"); 
-                    int relatedMjId = rs.getInt("relatedMjId"); 
-
-                    personnage = new Personnage(nom, profession, naissanceDate, Univers.getById(universId), biographieId, relatedJoueurId);
-                    personnage.setId(id);
-                    personnage.setImage(imagePath);
-                    personnage.setRelatedMjId(relatedMjId);
-                }
-            } 
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            personnage = null;
         }
 
         return personnage;

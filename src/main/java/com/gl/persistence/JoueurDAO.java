@@ -15,19 +15,33 @@ import com.gl.model.Personnage;
 public class JoueurDAO implements DAO<Joueur> {
 
     @Override
-    public void save(Joueur entity) {
+    public int save(Joueur entity) {
         String sql = "INSERT INTO Joueur(nom) VALUES(?)";
-        
+        int id = -1;
+
         try (Connection conn = SQLiteManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             pstmt.setString(1, entity.getPseudo());
             
             pstmt.executeUpdate();
+
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+        
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        if (id != -1) {
+            entity.setId(id);
+        } 
+        
+        return id;
     }
 
     @Override
@@ -42,11 +56,15 @@ public class JoueurDAO implements DAO<Joueur> {
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    // Reconstruction de l'objet Joueur depuis la BDD
                     String pseudo = rs.getString("nom");
                     
                     joueur = new Joueur(pseudo); 
                     joueur.setId(id);
+
+                    List<Personnage> personnages = findPersonnagesByJoueurId(id);
+                    List<Partie> partiesMJ = findPartieMjByJoueurId(id);
+                    joueur.setPersonnages(personnages);
+                    joueur.setPartieMJ(partiesMJ);
                 }
             }
 
@@ -130,8 +148,10 @@ public class JoueurDAO implements DAO<Joueur> {
                     joueur = new Joueur(pseudo);
                     joueur.setId(id);
                     
-                    List<Personnage> personnages = findPersonnagesByJoueur(joueur, conn);
+                    List<Personnage> personnages = findPersonnagesByJoueurId(id);
+                    List<Partie> partiesMJ = findPartieMjByJoueurId(id);
                     joueur.setPersonnages(personnages);
+                    joueur.setPartieMJ(partiesMJ);
                 }
             }
         
@@ -145,24 +165,24 @@ public class JoueurDAO implements DAO<Joueur> {
         return joueur;
     }
 
-    public List<Personnage> findPersonnagesByJoueur(Joueur joueur, Connection conn) {
+    private List<Personnage> findPersonnagesByJoueurId(int id) {
         PersonnageDAO personnageDAO = new PersonnageDAO();
-        PartieDAO partieDAO = new PartieDAO();
         List<Personnage> personnages = new ArrayList<>();
         String sql = "SELECT  partie_id, personnage_id FROM Participation WHERE joueur_id = ? ";
         
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SQLiteManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, joueur.getId());
+            pstmt.setInt(1, id);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while(rs.next()) {
                     int partieId = rs.getInt("partie_id");
-                    Personnage personnage = personnageDAO.findById(rs.getInt("personnage_id"), conn);
-                    Partie partie = partieDAO.findById(partieId, conn);
-                    if (personnage != null && partie != null) {
-                    personnage.setPartie(partie);
-                    personnages.add(personnage);
+                    Personnage personnage = personnageDAO.findById(rs.getInt("personnage_id"));
+
+                    if (personnage != null) {
+                        personnage.setPartieId(partieId);
+                        personnages.add(personnage);
                     }
                 }
             } 
@@ -171,5 +191,30 @@ public class JoueurDAO implements DAO<Joueur> {
         }
 
         return personnages;
+    }
+
+    private List<Partie> findPartieMjByJoueurId(int id) {
+        PartieDAO partieDAO = new PartieDAO();
+        List<Partie> parties = new ArrayList<>();
+        String sql = "SELECT  partie_id  FROM Participation WHERE mj_id = ? ";
+
+        try (Connection conn = SQLiteManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while(rs.next()) {
+                    int partieId = rs.getInt("partie_id");
+                    Partie partie = partieDAO.findById(partieId);
+
+                    parties.add(partie);
+                }
+            } 
+        } catch (SQLException e) {
+            System.out.println("Erreur FindByName : " + e.getMessage());
+        }
+
+        return parties;
     }
 }

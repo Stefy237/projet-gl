@@ -1,5 +1,6 @@
 package com.gl.controller.joueur;
 
+import com.gl.App;
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
 import com.gl.controller.ControleurConfirmation;
@@ -30,6 +31,7 @@ public class ControleurInscription extends Controleur {
         Runnable handleSave = () -> {
             Joueur joueur = new Joueur(input.trim());
             joueurDAO.save(joueur);
+            App.setJoueurConnecte(joueur);
             routeur.pop();
             routeur.push(new ControleurJoueur(routeur, new VueJoueur(), joueur));
         };

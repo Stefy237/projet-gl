@@ -1,5 +1,6 @@
 package com.gl.controller.joueur;
 
+import com.gl.App;
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
 import com.gl.model.Joueur;
@@ -22,6 +23,7 @@ public class ControleurConnexion extends Controleur {
             processInput();
         }
 
+        App.setJoueurConnecte(joueur);
         routeur.push(new ControleurJoueur(routeur, new VueJoueur(joueur), joueur));
     }
     

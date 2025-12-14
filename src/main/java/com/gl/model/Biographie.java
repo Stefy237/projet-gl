@@ -3,7 +3,7 @@ package com.gl.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Biographie {
+public class Biographie extends Sujet{
     private int id;
     private String titre;
     private int personnageId;

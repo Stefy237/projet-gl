@@ -15,8 +15,10 @@ import com.gl.model.Paragraphe;
 public class ParagrapheDAO implements DAO<Paragraphe> {
     
     @Override
-    public void save(Paragraphe p) {
+    public int save(Paragraphe p) {
         String sql = "INSERT INTO Paragraphe (titre, contenu, is_private, episode_id) VALUES (?, ?, ?, ?)";
+        int id = -1;
+
         
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -28,7 +30,6 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
             
             stmt.executeUpdate();
             
-            // Récupérer l'ID généré
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     p.setId(rs.getInt(1));
@@ -37,6 +38,12 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        if (id != -1) {
+            p.setId(id);
+        } 
+        
+        return id;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
 
     @Override
     public List<Paragraphe> findAll() {
-        String sql = "SELECT id, titre, contenu, is_private FROM Paragraphe";
+        String sql = "SELECT id, titre, contenu, is_private, episode_id FROM Paragraphe";
         List<Paragraphe> paragraphes = new ArrayList<>();
         
         try (Connection conn = SQLiteManager.getConnection();
@@ -79,9 +86,11 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
                 String titre = rs.getString("titre");
                 String contenu = rs.getString("contenu");
                 boolean isPrivate = rs.getBoolean("is_private");
+                int episodeId = rs.getInt("episode_id");
                 
                 Paragraphe p = new Paragraphe(titre, contenu, isPrivate);
-                // p.setId(id);
+                p.setId(id);
+                p.setEpisodeId(episodeId);
                 paragraphes.add(p);
             }
         } catch (SQLException e) {
@@ -144,6 +153,7 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
                     episode = new Episode(titre); 
                     episode.setRelatedBiographieId(biographieId);
                     episode.setRelatedAventureId(aventureId);
+                    episode.setId(episodeId);
                 } 
             } 
 

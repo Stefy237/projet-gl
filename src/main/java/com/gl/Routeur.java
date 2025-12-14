@@ -56,4 +56,10 @@ public class Routeur {
             historique.pop();
         }
     }
+
+    public void backToHome() {
+        while (historique.size() > 3) {
+            historique.pop();
+        }
+    }
 }

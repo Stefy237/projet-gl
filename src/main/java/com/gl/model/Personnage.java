@@ -1,6 +1,6 @@
 package com.gl.model;
 
-public class Personnage {
+public class Personnage extends Sujet {
     private int id; // pour les requêtes SQL
 
     private String nom;
@@ -9,9 +9,9 @@ public class Personnage {
     private String image;
 
     private Univers univers;
-    private int biographieId;
-    private Partie partie;
 
+    private int biographieId;
+    private int partieId;
     private int relatedJoueurId;
     private int relatedMjId;
 
@@ -49,14 +49,6 @@ public class Personnage {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Partie getPartie() {
-        return partie;
-    }
-
-    public void setPartie(Partie partie) {
-        this.partie = partie;
     }
 
     public int getId() {
@@ -101,5 +93,13 @@ public class Personnage {
 
     public void setRelatedMjId(int relatedMjId) {
         this.relatedMjId = relatedMjId;
+    }
+
+    public int getPartieId() {
+        return partieId;
+    }
+
+    public void setPartieId(int partieId) {
+        this.partieId = partieId;
     }
 }

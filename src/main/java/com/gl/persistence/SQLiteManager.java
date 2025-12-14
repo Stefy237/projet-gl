@@ -9,24 +9,36 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLiteManager {
-    private static Connection connection;
+    // private static Connection connection;
+
+    private SQLiteManager() {}
+
+    // public static Connection getConnection() {
+    //     if (connection == null) {
+    //         try {
+    //             connection = DriverManager.getConnection("jdbc:sqlite:jeu_de_role.db");
+    //         } catch (SQLException e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    //     return connection;
+    // }
+
+    // public static void closeConnection() {
+    //     try {
+    //         if (connection != null) connection.close();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection("jdbc:sqlite:jeu_de_role.db");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return connection;
-    }
-
-    public static void closeConnection() {
         try {
-            if (connection != null) connection.close();
+            // L'appelant reçoit une nouvelle connexion.
+            return DriverManager.getConnection("jdbc:sqlite:jeu_de_role.db");
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 

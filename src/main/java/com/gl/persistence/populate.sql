@@ -50,7 +50,7 @@ WITH PersonnageData AS (
         CASE WHEN id <= 6 THEN 1 WHEN id <= 12 THEN 2 WHEN id <= 18 THEN 3 WHEN id <= 24 THEN 4 ELSE 5 END AS univers_id
     FROM (SELECT ROWID AS id FROM Biographie LIMIT 30)
 )
-INSERT INTO Personnage (id, nom, profession, date_naissance, univers_id, biogragie_id)
+INSERT INTO Personnage (id, nom, profession, date_naissance, univers_id, biographie_id)
 SELECT PD.row_num, PD.nom, PD.nom || ' profession', '2000-01-01', PD.univers_id, PD.row_num
 FROM PersonnageData PD;
 

@@ -16,10 +16,9 @@ public class VuePartie implements Observateur,Vue {
     }
     @Override
     public void miseAJour() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'miseAJour'");
-        
+        // Logique de mise à jour 
     }
+
     @Override
     public void afficher() {
         System.out.println("======================= BIENVENUE sur la partie: " + partie.getTitre() + " ========================");

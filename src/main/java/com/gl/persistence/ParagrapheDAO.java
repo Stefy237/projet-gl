@@ -38,17 +38,13 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        if (id != -1) {
-            p.setId(id);
-        } 
         
         return id;
     }
 
     @Override
     public Paragraphe findById(int id) {
-        String sql = "SELECT titre, contenu, is_private FROM Paragraphe WHERE id = ?";
+        String sql = "SELECT titre, contenu, is_private, episode_id FROM Paragraphe WHERE id = ?";
         Paragraphe paragraphe = null;
         
         try (Connection conn = SQLiteManager.getConnection();
@@ -61,9 +57,11 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
                     String titre = rs.getString("titre");
                     String contenu = rs.getString("contenu");
                     boolean isPrivate = rs.getBoolean("is_private");
+                    int episodeId = rs.getInt("episode_id");
                     
                     paragraphe = new Paragraphe(titre, contenu, isPrivate);
                     paragraphe.setId(id);
+                    paragraphe.setEpisodeId(episodeId);
                 }
             }
         } catch (SQLException e) {

@@ -53,9 +53,9 @@ CREATE TABLE IF NOT EXISTS Personnage (
     date_naissance TEXT,
     image_path TEXT,
     univers_id INTEGER,
-    biogragie_id INTEGER UNIQUE NOT NULL, 
+    biographie_id INTEGER UNIQUE NOT NULL, 
     FOREIGN KEY (univers_id) REFERENCES Univers(id),
-    FOREIGN KEY (biogragie_id) REFERENCES Biographie(id) ON DELETE CASCADE
+    FOREIGN KEY (biographie_id) REFERENCES Biographie(id) ON DELETE CASCADE
 );
 
 -- 5. Table d'association "Participation" 

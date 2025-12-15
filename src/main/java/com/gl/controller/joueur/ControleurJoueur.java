@@ -15,6 +15,7 @@ import com.gl.persistence.PartieDAO;
 import com.gl.persistence.PersonnageDAO;
 import com.gl.view.Vue;
 import com.gl.view.partie.VueAjouterPartie;
+import com.gl.view.partie.VuePartie;
 import com.gl.view.personnage.VueAjouterPersonnage;
 import com.gl.view.personnage.VuePersonnage;
 
@@ -44,8 +45,7 @@ public class ControleurJoueur extends Controleur {
                 }
                 
                 Partie partie = partieDAO.findById(partieId);
-                // routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
-                
+                routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
                 break;
             
             case "2":

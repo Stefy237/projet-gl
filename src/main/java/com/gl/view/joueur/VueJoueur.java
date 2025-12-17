@@ -1,5 +1,10 @@
 package com.gl.view.joueur;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 import com.gl.model.Joueur;
 import com.gl.model.Observateur;
 import com.gl.model.Partie;
@@ -47,6 +52,21 @@ public class VueJoueur implements Observateur, Vue {
         }
 
         System.out.println(">>>>>>>>>>> Liste des parties des propositions de partie");
+        Path path = Path.of("Buffer/Partie/partie.txt");
+
+        
+
+        if (!Files.exists(path)) {
+            System.out.println("Le fichier n'existe pas.");
+            //return;
+        }else{
+            try (Stream<String> lines = Files.lines(path)) {
+                lines.forEach(System.out::println);
+            } catch (IOException e) {
+                System.err.println("Erreur de lecture : " + e.getMessage());
+            }
+        }
+        
 
         System.out.println("""
                 Entrez : 

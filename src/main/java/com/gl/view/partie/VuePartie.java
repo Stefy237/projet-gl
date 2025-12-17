@@ -37,7 +37,7 @@ public class VuePartie implements Observateur,Vue {
 
         System.out.println(">>>>>>>>> Personnages en attente de validation");
         System.out.println(" Personnage | Personnage id");
-
+        
         if(partie.getMjId() == App.getjoueurConnecte().getId()) {
             texte = """
                     Entrez : 

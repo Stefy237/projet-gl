@@ -11,6 +11,7 @@ public class Episode extends Sujet {
     private String titre;
     private boolean joueurValide;
     private boolean mjValide;
+    private String dateCreation;
     private List<Paragraphe> paragraphes = new ArrayList<>();
 
     public Episode(String titre) {
@@ -92,5 +93,13 @@ public class Episode extends Sujet {
 
     public void setMjValide(boolean mjValide) {
         this.mjValide = mjValide;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }

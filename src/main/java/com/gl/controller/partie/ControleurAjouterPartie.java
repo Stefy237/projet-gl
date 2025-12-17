@@ -23,10 +23,10 @@ public class ControleurAjouterPartie extends Controleur {
         System.out.println("Entrez l'id de l'Univers");
         int id = scanner.nextInt();
 
-        Partie partie = new Partie(titre,Univers.getById(id),initSituation);
+        // Partie partie = new Partie(titre,Univers.getById(id),initSituation);
 
         PartieDAO partieDAO = new PartieDAO();
-        partieDAO.save(partie);
+        // partieDAO.save(partie);
 
         System.out.println("partie creee");
     }

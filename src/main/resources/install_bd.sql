@@ -41,7 +41,12 @@ CREATE TABLE IF NOT EXISTS Partie (
     resume TEXT,
     validee INTEGER DEFAULT 0, -- Booléen : 0 = faux, 1 = vrai
     jouee INTEGER DEFAULT 0, -- Booléen : 0 = faux, 1 = vrai
+    date TEXT,
+    lieu TEXT,
+    situation_initiale TEXT,
+    mj_id INTEGER,
     univers_id INTEGER,
+    FOREIGN KEY (mj_id) REFERENCES Joueur(id) ON DELETE CASCADE,
     FOREIGN KEY (univers_id) REFERENCES Univers(id)
 );
 

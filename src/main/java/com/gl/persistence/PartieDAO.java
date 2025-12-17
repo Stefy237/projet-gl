@@ -48,7 +48,7 @@ public class PartieDAO implements DAO<Partie> {
 
     @Override
     public Partie findById(int id) {
-        String sqlPartie = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_idunivers_id FROM Partie WHERE id = ?";
+        String sqlPartie = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_id, univers_id FROM Partie WHERE id = ?";
         Partie partie = null;
 
         try (Connection conn = SQLiteManager.getConnection();
@@ -97,7 +97,7 @@ public class PartieDAO implements DAO<Partie> {
     @Override
     public List<Partie> findAll() {
         List<Partie> parties = new ArrayList<>();
-        String sql = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_idunivers_id FROM Partie";
+        String sql = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_id, univers_id FROM Partie";
 
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement();

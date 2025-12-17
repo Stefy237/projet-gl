@@ -38,14 +38,29 @@ public class ControleurPartie extends Controleur{
                 break;
             
             case "2":
-                System.out.println("entrez l'id du personnage \n > ");
-                int id = scanner.nextInt();
+                int id = Integer.parseInt(entries[1]);
                 Personnage personnage = personnageDAO.findById(id);
                 routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
-                
                 break;
 
-        
+            case "3":
+                String resume = entries[1];
+                partie.setResume(resume);
+                partie.setDejaJouee(true);
+                break;
+
+            case "4":
+                id = Integer.parseInt(entries[1]);
+                personnage = personnageDAO.findById(id);
+                partie.ajouterPersonnage(personnage);
+                break;
+
+            case "5":
+                 id = Integer.parseInt(entries[1]);
+                 personnage = personnageDAO.findById(id);
+                 partie.supprimerPersonnage(personnage);
+                break;
+
             default:
                 System.out.println("Entrée invalide. Veuillez réessayer.");
                 processInput();

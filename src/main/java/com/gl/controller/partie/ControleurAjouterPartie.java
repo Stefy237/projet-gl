@@ -1,5 +1,12 @@
+   
 package com.gl.controller.partie;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import com.gl.App;
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
 import com.gl.model.Partie;
@@ -23,10 +30,33 @@ public class ControleurAjouterPartie extends Controleur {
         System.out.println("Entrez l'id de l'Univers");
         int id = scanner.nextInt();
 
-        // Partie partie = new Partie(titre,Univers.getById(id),initSituation);
+        Partie partie = new Partie(titre,Univers.getById(id),initSituation, App.getjoueurConnecte().getId());
 
         PartieDAO partieDAO = new PartieDAO();
-        // partieDAO.save(partie);
+        int partieId = partieDAO.save(partie);
+        try {
+            //Path file = Path.of("../../Buffer/Partie/partie0.txt");
+            Path file = Path.of("Buffer","Partie","partie"+partieId+".txt");
+            Path path = Path.of("Buffer","Partie","partie.txt");
+
+            //  Crée les dossiers parents si nécessaires
+            Files.createDirectories(file.getParent());
+            Files.createDirectories(path.getParent());
+
+            //  Crée le fichier s’il n’existe pas
+            Files.createFile(file);
+            //Files.createFile(path);
+
+            Files.writeString(
+                path,
+                ""+partie.getTitre()+" | "+partie.getId()+ System.lineSeparator(), StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+            );
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("partie creee");
     }

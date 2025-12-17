@@ -9,12 +9,6 @@ import com.gl.model.Paragraphe;
 
 public class EpisodeDAO implements DAO {
 
-    private Connection connection;
-
-    public EpisodeDAO(Connection connection) {
-        this.connection = connection;
-    }
-
     @Override
     public int save(Object entity) {
         if (!(entity instanceof Episode)) return -1;
@@ -22,7 +16,8 @@ public class EpisodeDAO implements DAO {
         
         String sql = "INSERT INTO Episode (titre, joueur_valide, mj_valide, date_creation, biographie_id, aventure_id) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = SQLiteManager.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, episode.getTitre());
             pstmt.setInt(2, episode.isJoueurValide() ? 1 : 0);
             pstmt.setInt(3, episode.isMjValide() ? 1 : 0);
@@ -51,7 +46,8 @@ public class EpisodeDAO implements DAO {
         String sql = "SELECT * FROM Episode WHERE id = ?";
         Episode episode = null;
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = SQLiteManager.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -71,7 +67,8 @@ public class EpisodeDAO implements DAO {
         List<Episode> episodes = new ArrayList<>();
         String sql = "SELECT * FROM Episode";
 
-        try (Statement stmt = connection.createStatement();
+        try (Connection connection = SQLiteManager.getConnection();
+            Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Episode ep = mapResultSetToEpisode(rs);
@@ -91,7 +88,8 @@ public class EpisodeDAO implements DAO {
 
         String sql = "UPDATE Episode SET titre = ?, joueur_valide = ?, mj_valide = ?, date_creation = ?, biographie_id = ?, aventure_id = ? WHERE id = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = SQLiteManager.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, episode.getTitre());
             pstmt.setInt(2, episode.isJoueurValide() ? 1 : 0);
             pstmt.setInt(3, episode.isMjValide() ? 1 : 0);
@@ -108,7 +106,8 @@ public class EpisodeDAO implements DAO {
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM Episode WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = SQLiteManager.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             // Le "ON DELETE CASCADE" en SQL gérera la suppression des paragraphes automatiquement
@@ -134,7 +133,8 @@ public class EpisodeDAO implements DAO {
         List<Paragraphe> paragraphes = new ArrayList<>();
         String sql = "SELECT * FROM Paragraphe WHERE episode_id = ?";
         
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = SQLiteManager.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, episodeId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

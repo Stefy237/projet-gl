@@ -37,18 +37,28 @@ INSERT INTO Partie (titre, resume, jouee, univers_id, validee) VALUES
 
 
 -- 4. BIOGRAPHIES (30 entrées)
+-- Utiliser une technique de génération de séquence fiable (compter sur la table Joueur pour générer)
+WITH Séquence3 (mult) AS (
+    SELECT 0 UNION ALL SELECT 1 UNION ALL SELECT 2 
+),
+Nombres30 AS (
+    SELECT J.id + S.mult * 10 AS num
+    FROM Joueur J
+    CROSS JOIN Séquence3 S
+)
 INSERT INTO Biographie (id, titre)
-SELECT ROWID, 'Biographie temporaire N°' || ROWID 
-FROM (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10
-    UNION SELECT 11 UNION SELECT 12 UNION SELECT 13 UNION SELECT 14 UNION SELECT 15 UNION SELECT 16 UNION SELECT 17 UNION SELECT 18 UNION SELECT 19 UNION SELECT 20
-    UNION SELECT 21 UNION SELECT 22 UNION SELECT 23 UNION SELECT 24 UNION SELECT 25 UNION SELECT 26 UNION SELECT 27 UNION SELECT 28 UNION SELECT 29 UNION SELECT 30) LIMIT 30;
+SELECT num, 'Biographie temporaire N°' || num
+FROM Nombres30
+ORDER BY num; -- Ordonner pour garantir que l'ID 1 est bien le premier
 
 -- 5. PERSONNAGES (30 entrées)
 WITH PersonnageData AS (
     SELECT id AS row_num,
         CASE id WHEN 1 THEN 'Aragorn' WHEN 7 THEN 'V' WHEN 13 THEN 'Detective Malone' WHEN 19 THEN 'Han Solo' WHEN 25 THEN 'Max' ELSE 'Autre' END AS nom,
+        -- La logique de l'univers se base maintenant sur les IDs de Biographie
         CASE WHEN id <= 6 THEN 1 WHEN id <= 12 THEN 2 WHEN id <= 18 THEN 3 WHEN id <= 24 THEN 4 ELSE 5 END AS univers_id
-    FROM (SELECT ROWID AS id FROM Biographie LIMIT 30)
+    FROM Biographie
+    LIMIT 30 -- Sélectionne les 30 IDs insérés précédemment
 )
 INSERT INTO Personnage (id, nom, profession, date_naissance, univers_id, biographie_id)
 SELECT PD.row_num, PD.nom, PD.nom || ' profession', '2000-01-01', PD.univers_id, PD.row_num

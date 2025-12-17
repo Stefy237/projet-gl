@@ -1,5 +1,6 @@
 package com.gl.persistence;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLiteManager {
+    // private static final String sep = File.separator;
+    private static final String DB_FOLDER = "db";
+    private static final String DB_NAME = "jeu_de_role.db";
+    private static final String DB_FULL_PATH = DB_FOLDER + File.separator + DB_NAME; 
+    private static final String JDBC_URL = "jdbc:sqlite:" + DB_FULL_PATH;
+
     // private static Connection connection;
 
     private SQLiteManager() {}
@@ -32,21 +39,33 @@ public class SQLiteManager {
     //     }
     // }
 
+    private static void ensureDbFolderExists() {
+        File folder = new File(DB_FOLDER);
+        if (!folder.exists()) {
+            // Utilise mkdirs() pour créer le dossier
+            if (folder.mkdirs()) {
+                 System.out.println("Dossier de base de données créé : " + DB_FOLDER);
+            }
+        }
+    }
+
     public static Connection getConnection() {
+        ensureDbFolderExists(); 
+        
         try {
-            // L'appelant reçoit une nouvelle connexion.
-            return DriverManager.getConnection("jdbc:sqlite:jeu_de_role.db");
+            return DriverManager.getConnection(JDBC_URL); 
         } catch (SQLException e) {
+            System.err.println("Erreur de connexion à la base de données : " + JDBC_URL);
             e.printStackTrace();
             return null;
         }
     }
 
     public static void initialize() {
-        try (InputStream inputStream = SQLiteManager.class.getResourceAsStream("/schema.sql")) {
+        try (InputStream inputStream = SQLiteManager.class.getResourceAsStream("/install_bd.sql")) {
             
             if (inputStream == null) {
-                throw new RuntimeException("Fichier schema.sql introuvable !");
+                throw new RuntimeException("Fichier install_bd.sql introuvable !");
             }
 
             String sqlSchema = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);

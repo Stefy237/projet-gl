@@ -8,10 +8,10 @@ import com.gl.view.joueur.VueAccueil;
 public class App {
     private static Joueur joueurConnecte;
     public static void main(String[] args) {
-        // SQLiteManager.initialize();
 
-        // Pour peupler automatiquement les tables via le code java -- Veuillez décommenter cette commande
+        // Pour construire et peupler automatiquement les tables via le code java -- Veuillez décommenter cette commande
         // ATTENTION : À NE FAIRE QU'UNE SEULE FOIS
+        // SQLiteManager.initialize();
         // SQLiteManager.loadTestData();
 
         Routeur routeur = Routeur.getInstance();

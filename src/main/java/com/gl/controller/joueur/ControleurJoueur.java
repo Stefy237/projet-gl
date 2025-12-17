@@ -45,7 +45,12 @@ public class ControleurJoueur extends Controleur {
                 }
                 
                 Partie partie = partieDAO.findById(partieId);
-                routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
+                if(partie != null) {
+                    routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
+                } else {
+                    System.out.println("Veullez entrer une entrée valide");
+                    processInput();
+                }
                 break;
             
             case "2":
@@ -59,7 +64,12 @@ public class ControleurJoueur extends Controleur {
                 }
                 
                 Personnage personnage = personnageDAO.findById(personnageId);
-                routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
+                if(personnage != null) {
+                    routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
+                } else {
+                    System.out.println("Veullez entrer une entrée valide");
+                    processInput();
+                }
                 
                 break;
 
@@ -73,7 +83,6 @@ public class ControleurJoueur extends Controleur {
         
             default:
                 System.out.println("Veullez entrer une entrée valide");
-                sc.close();
                 processInput();
         }
     }

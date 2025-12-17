@@ -3,8 +3,11 @@ import os
 import sys
 
 # Configuration
+DB_FOLDER = "db"
 DB_NAME = "jeu_de_role.db"
-SQL_FILE = "populate.sql"
+SQL_FILE = "install_bd.sql"
+
+DB_FULL_PATH = os.path.join(DB_FOLDER, DB_NAME)
 
 def load_test_data():
     print("Chargement des données de test...")
@@ -28,8 +31,11 @@ def load_test_data():
 
     conn = None
     try:
+        if not os.path.exists(DB_FOLDER):
+            os.makedirs(DB_FOLDER)
+            print(f"Dossier de base de données créé : {DB_FOLDER}")
         # 3. Connexion à la base de données
-        conn = sqlite3.connect(DB_NAME)
+        conn = sqlite3.connect(DB_FULL_PATH)
         cursor = conn.cursor()
 
         # Activer les foreign keys (important pour SQLite)

@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gl.model.Joueur;
 import com.gl.model.Partie;
+import com.gl.model.Personnage;
 import com.gl.model.Univers;
 
 public class PartieDAO implements DAO<Partie> {
@@ -72,9 +74,8 @@ public class PartieDAO implements DAO<Partie> {
                     partie.setDejaJouee(dejaJouee);
                     partie.setValidee(validee);
                     
-                    // 🚨 CHARGEMENT DES RELATIONS (si nécessaire, nécessiterait ParticipationDAO)
-                    // partie.setPersonnages(findPersonnagesByPartieId(id));
-                    // partie.setMjs(findMjsByPartieId(id)); 
+                    partie.setPersonnages(findPersonnagesByPartieId(id));
+                    // partie.setMj(findMjsByPartieId(id)); 
                 }
             }
 
@@ -110,7 +111,9 @@ public class PartieDAO implements DAO<Partie> {
                 p.setId(id);
                 p.setDejaJouee(dejaJouee);
                 p.setValidee(validee);
-                
+
+                p.setPersonnages(findPersonnagesByPartieId(id));
+
                 parties.add(p);
             }
 
@@ -165,4 +168,77 @@ public class PartieDAO implements DAO<Partie> {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Récupère tous les Personnages participant à cette Partie.
+     * Le PersonnageDAO est utilisé pour charger chaque objet Personnage.
+     * Note : Ceci charge les Personnages joués, non le MJ.
+     */
+    private List<Personnage> findPersonnagesByPartieId(int partieId) {
+        // Jointure pour trouver les IDs Personnage joués dans cette Partie.
+        String sql = "SELECT DISTINCT personnage_id FROM Participation WHERE partie_id = ? AND personnage_id IS NOT NULL";
+        List<Personnage> personnages = new ArrayList<>();
+        
+        // Instanciation du DAO nécessaire pour éviter le couplage direct aux modèles
+        PersonnageDAO personnageDAO = new PersonnageDAO(); 
+
+        try (Connection conn = SQLiteManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, partieId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while(rs.next()) {
+                    int personnageId = rs.getInt("personnage_id");
+                    // Charge l'objet Personnage complet
+                    Personnage personnage = personnageDAO.findById(personnageId); 
+
+                    if (personnage != null) {
+                        personnages.add(personnage);
+                    }
+                }
+            } 
+        } catch (SQLException e) {
+            System.err.println("Erreur chargement Personnages par Partie ID : " + e.getMessage());
+            e.printStackTrace();
+        }
+        return personnages;
+    }
+
+
+    /**
+     * Récupère le ou les Joueurs Maîtres du Jeu (MJ) pour cette Partie.
+     * Le JoueurDAO est utilisé pour charger chaque objet Joueur.
+     */
+    // private List<Joueur> findMjsByPartieId(int partieId) {
+    //     // Jointure pour trouver les IDs Joueur (MJ) pour cette Partie.
+    //     // Utilise mj_id car un MJ est toujours un Joueur.
+    //     String sql = "SELECT DISTINCT mj_id FROM Participation WHERE partie_id = ? AND mj_id IS NOT NULL";
+    //     List<Joueur> mjs = new ArrayList<>();
+        
+    //     // Instanciation du DAO nécessaire
+    //     JoueurDAO joueurDAO = new JoueurDAO(); 
+
+    //     try (Connection conn = SQLiteManager.getConnection();
+    //         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+    //         pstmt.setInt(1, partieId);
+
+    //         try (ResultSet rs = pstmt.executeQuery()) {
+    //             while(rs.next()) {
+    //                 int mjId = rs.getInt("mj_id");
+    //                 // Charge l'objet Joueur (MJ) complet
+    //                 Joueur mj = joueurDAO.findById(mjId); 
+
+    //                 if (mj != null) {
+    //                     mjs.add(mj);
+    //                 }
+    //             }
+    //         } 
+    //     } catch (SQLException e) {
+    //         System.err.println("Erreur chargement MJs par Partie ID : " + e.getMessage());
+    //         e.printStackTrace();
+    //     }
+    //     return mjs;
+    // }
 }

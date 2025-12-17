@@ -38,6 +38,7 @@ public abstract class Controleur {
             case FERMER -> routeur.stop();
             case QUITTER -> routeur.backToRoot();
             case RETOURNER -> routeur.pop();
+            case HOME -> routeur.backToHome();
         }
     }
 

@@ -54,11 +54,11 @@ public class VueBiographie implements Observateur, Vue {
 
             - Pour ajouter creer un épisode et y ajouter un paragrphe (soit ajouter un paragraphe à un paragraphe inexistant, création récursive)
                 a,0,titre de l'episode, titre du paragraphe,contenu du paragraphe,privée? (1 pour oui 0 sinon)
-                ex : a,0,le lycée,la rentree,le premier jour de classe,0 
+                ex : a,0,le lycée,la rentree,le premier jour de classe,1
 
             - Pour rendre un paragraphe pubic
                 p,numéro de l'épisode, numéro du paragraphe
-                ex : p,1,1
+                ex : p,1,10
 
             - Pour modifier paragraphe
                 m,numéro de l'épisode, numéro du paragraphe

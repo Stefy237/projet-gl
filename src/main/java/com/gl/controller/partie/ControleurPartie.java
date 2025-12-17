@@ -26,7 +26,7 @@ public class ControleurPartie extends Controleur{
         super(routeur, vue);
         this.partie = partie;
     }
-    
+
     @Override
     protected void handleLocalInput(String input) {
 
@@ -37,7 +37,7 @@ public class ControleurPartie extends Controleur{
                 break;
             
             case "2":
-                System.out.println("entrez l'id du personnage");
+                System.out.println("entrez l'id du personnage \n > ");
                 int id = scanner.nextInt();
                 Personnage personnage = personnageDAO.findById(id);
                 routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));

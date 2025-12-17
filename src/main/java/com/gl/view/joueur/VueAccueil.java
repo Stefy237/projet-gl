@@ -10,6 +10,7 @@ public class VueAccueil implements Vue {
             COMMANDES GLOBABLES : Ces commandes fonctionne tout le long du programme
                 - x : pour fermer l'application
                 - q : pour se deconnecter l'application -> revenir sur la page d'accueil
+                - h : pour revenir à l'accueil
                 - r : pour revenir à la page précedente
                 - o : pour confirmer votre choix
                 - n : pour rejeter votre choix

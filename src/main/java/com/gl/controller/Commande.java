@@ -3,6 +3,7 @@ package com.gl.controller;
 public enum Commande {
     FERMER("x"), 
     QUITTER("q"), 
+    HOME("h"), 
     RETOURNER("r"), 
     ACCEPTER("o"), 
     REFUSER("n");

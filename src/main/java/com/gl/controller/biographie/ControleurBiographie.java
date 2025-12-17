@@ -20,12 +20,13 @@ public class ControleurBiographie extends Controleur {
 
     @Override
     protected void handleLocalInput(String input) {
+        final String errorMessage = "Entrée invalide. Veuillez réessayer.";
         String[] entries = input.split(",");
 
         switch (entries[0].trim().toLowerCase()) {
             case "a":
                 if (entries.length != 4) {
-                    System.out.println("Veuillez entrer une entrée valide");
+                    System.out.println(errorMessage);
                     processInput();
                 }
 
@@ -42,21 +43,55 @@ public class ControleurBiographie extends Controleur {
                     paragraphe.setEpisodeId(Integer.parseInt(entries[1]));
                     
                 } else {
-                    System.out.println("Veuillez entrer une entrée valide");
+                    System.out.println(errorMessage);
                     processInput();
                 }
                 break;
 
             case "p":
-                
+                if (entries.length != 2) {
+                    System.out.println(errorMessage);
+                    processInput();
+                }
+                int id = Integer.parseInt(entries[1]);
+                Paragraphe paragraphe = paragrapheDAO.findById(id);
+                if (paragraphe != null) {
+                    paragraphe.rendrePublique();
+                    paragrapheDAO.update(paragraphe);
+                } else {
+                    System.out.println(errorMessage);
+                    processInput();
+                }
                 break;
 
             case "m":
-                
+                if( entries.length != 2) {
+                    System.out.println(errorMessage);
+                    processInput();
+                }
+                int modId = Integer.parseInt(entries[1]);
+                Paragraphe modParagraphe = paragrapheDAO.findById(modId);
+                if (modParagraphe != null) {
+                    
+                }
                 break;
 
-            case "x":
-                
+            case "xp":
+                if (entries.length != 2) {
+                    System.out.println(errorMessage);
+                    processInput();
+                }
+                int paragrapheId = Integer.parseInt(entries[1]);
+                paragrapheDAO.delete(paragrapheId);
+                break;
+            
+            case "xe":
+                if (entries.length != 2) {
+                    System.out.println(errorMessage);
+                    processInput();
+                }
+                int episodeId = Integer.parseInt(entries[1]);
+                // paragrapheDAO.deleteEpisode(episodeId);
                 break;
         
             default:

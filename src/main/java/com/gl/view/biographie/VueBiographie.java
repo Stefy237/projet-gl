@@ -1,17 +1,14 @@
 package com.gl.view.biographie;
 
-import com.gl.controller.biographie.ControleurBiographie;
 import com.gl.model.Biographie;
 import com.gl.model.Episode;
 import com.gl.model.Observateur;
 import com.gl.model.Paragraphe;
-import com.gl.persistence.ParagrapheDAO;
 import com.gl.view.Vue;
 
 public class VueBiographie implements Observateur, Vue {
     public enum Type { PRIVEE, PUBLIQUE}
 
-    private ParagrapheDAO paragrapheDAO = new ParagrapheDAO();
     private Biographie biographie;
     private Type type;
 
@@ -36,7 +33,7 @@ public class VueBiographie implements Observateur, Vue {
         """);  
 
         for(Episode episode : biographie.getEpisodes()) {
-            System.out.println("\n >>>>>>>>>>>>>>> Episode " + episode.getId() + " \n Titre -- " + episode.getTitre() );
+            System.out.println("\n >>>>>>>>>>>>>>> Episode " + episode.getId() + " -- Status : " + (episode.isValider() ? "Validé" : "En cours d'écriture") + " \n Titre -- " + episode.getTitre() );
 
             for (Paragraphe paragraphe : episode.getParagraphes()) {
                 paragraphe.attache(this);
@@ -57,17 +54,25 @@ public class VueBiographie implements Observateur, Vue {
                 ex : a,0,le lycée,la rentree,le premier jour de classe,1
 
             - Pour rendre un paragraphe pubic
-                p,numéro de l'épisode, numéro du paragraphe
+                p, numéro du paragraphe
                 ex : p,1,10
 
-            - Pour modifier paragraphe
-                m,numéro de l'épisode, numéro du paragraphe
+            - Pour modifier épisode :
+                * Le titre d'un épisode
+                    me, t, numéro de l'épisode, nouveau titre de l'épisode
+                * Le titre d'un paragraphe
+                    mp, t, numéro du paragraphe, nouveau titre du paragraphe
+                * Le contenu d'un paragraphe
+                    mp, c, numéro du paragraphe, nouveau contenu du paragraphe
+                    
+            - Pour valider un épisode
+                ve, numéro de l'épisode
 
             - Pour supprimer paragraphe
-                x,numéro de l'épisode, numéro du paragraphe
+                xp, numéro du paragraphe
 
             - Pour supprimer un épisode
-                x,numéro de l'épisode
+                xe,numéro de l'épisode
         """);
         } else if(this.type == Type.PUBLIQUE) {
                 System.out.println("""
@@ -79,7 +84,7 @@ public class VueBiographie implements Observateur, Vue {
             for(Episode episode : biographie.getEpisodes()) {
                 boolean condition = episode.getParagraphes().stream()
                                             .allMatch(Paragraphe::isPrivate);
-                if(!condition) {
+                if(!condition  && episode.isValider()) {
                     System.out.println("\n >>>>>>>>>>>>>>> Episode " + episode.getId() + " \n Titre -- " + episode.getTitre() );
 
                     for (Paragraphe paragraphe : episode.getParagraphes()) {

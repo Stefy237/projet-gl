@@ -48,7 +48,7 @@ public class PartieDAO implements DAO<Partie> {
 
     @Override
     public Partie findById(int id) {
-        String sqlPartie = "SELECT id, titre, resume, jouee, validee, univers_id FROM Partie WHERE id = ?";
+        String sqlPartie = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_idunivers_id FROM Partie WHERE id = ?";
         Partie partie = null;
 
         try (Connection conn = SQLiteManager.getConnection();
@@ -60,22 +60,29 @@ public class PartieDAO implements DAO<Partie> {
                 if (rs.next()) {
                     
                     String titre = rs.getString("titre");
+                    String situationInitiale = rs.getString("situation_initiale");
                     String resume = rs.getString("resume");
+                    String lieu = rs.getString("lieu");
+                    String date = rs.getString("date");
+
                     
                     boolean dejaJouee = rs.getInt("jouee") == 1;
                     boolean validee = rs.getInt("validee") == 1; 
                     int universId = rs.getInt("univers_id");
+                    int mjId = rs.getInt("mj_id");
                     
                     Univers univers = Univers.getById(universId); 
                     
-                    partie = new Partie(titre, univers, resume);
+                    partie = new Partie(titre, univers, situationInitiale, mjId);
+                    partie.setResume(resume);
+                    partie.setLieu(lieu);
+                    partie.setDate(date);
                     
                     partie.setId(id);
                     partie.setDejaJouee(dejaJouee);
                     partie.setValidee(validee);
                     
-                    partie.setPersonnages(findPersonnagesByPartieId(id));
-                    // partie.setMj(findMjsByPartieId(id)); 
+                    partie.setPersonnages(findPersonnagesByPartieId(id)); 
                 }
             }
 
@@ -90,7 +97,7 @@ public class PartieDAO implements DAO<Partie> {
     @Override
     public List<Partie> findAll() {
         List<Partie> parties = new ArrayList<>();
-        String sql = "SELECT id, titre, resume, jouee, validee, univers_id FROM Partie";
+        String sql = "SELECT id, titre, situation_initiale, resume, jouee, lieu, date, validee, mj_idunivers_id FROM Partie";
 
         try (Connection conn = SQLiteManager.getConnection();
              Statement stmt = conn.createStatement();
@@ -99,18 +106,25 @@ public class PartieDAO implements DAO<Partie> {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String titre = rs.getString("titre");
+                String situationInitiale = rs.getString("situation_initiale");
+                String lieu = rs.getString("lieu");
+                String date = rs.getString("date");
                 String resume = rs.getString("resume");
                 
                 boolean dejaJouee = rs.getInt("jouee") == 1;
                 boolean validee = rs.getInt("validee") == 1; 
                 int universId = rs.getInt("univers_id");
+                int mjId = rs.getInt("mj_id");
                 
                 Univers univers = Univers.getById(universId);
                 
-                Partie p = new Partie(titre, univers, resume);
+                Partie p = new Partie(titre, univers, situationInitiale, mjId);
                 p.setId(id);
                 p.setDejaJouee(dejaJouee);
                 p.setValidee(validee);
+                p.setDate(date);
+                p.setLieu(lieu);
+                p.setResume(resume);
 
                 p.setPersonnages(findPersonnagesByPartieId(id));
 

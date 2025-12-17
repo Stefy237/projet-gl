@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS Episode (
     titre TEXT,
     joueur_valide INTEGER DEFAULT 0,
     mj_valide INTEGER DEFAULT 0,
+    date_creation TEXT,
     biographie_id INTEGER NOT NULL,
     aventure_id INTEGER, -- Reste 'aventure_id', mais c'est désormais un alias de partie_id
     FOREIGN KEY (biographie_id) REFERENCES Biographie(id) ON DELETE CASCADE,

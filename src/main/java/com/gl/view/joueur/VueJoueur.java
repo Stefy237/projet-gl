@@ -52,8 +52,12 @@ public class VueJoueur implements Observateur, Vue {
                 Entrez : 
                 1 - Pour afficher une partie en particulier
                 2 - Pour afficher un personnage en particulier
-                3 - Pour creer une partie
-                4 - Pour creer un personnage
+                - Pour creer une partie
+                    3
+                - Pour creer un personnage
+                    4
+                - Pour rejoindre une partie
+                    5,id de la partie,id du personnage
                 """);
     }
     

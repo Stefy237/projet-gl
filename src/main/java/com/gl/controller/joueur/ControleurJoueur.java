@@ -29,6 +29,7 @@ public class ControleurJoueur extends Controleur {
 
     @Override
     protected void handleLocalInput(String input) {
+        final String errorMessage = "Entrée invalide. Veuillez réessayer.";
         Scanner sc = new Scanner(System.in);
         PartieDAO partieDAO = new PartieDAO();
         PersonnageDAO personnageDAO = new PersonnageDAO();
@@ -40,7 +41,7 @@ public class ControleurJoueur extends Controleur {
                 try {
                     partieId = Integer.parseInt(sc.nextLine());     
                 } catch (NumberFormatException e) {
-                   System.out.println("Veullez entrer une entrée valide");
+                   System.out.println(errorMessage);
                     processInput();
                 }
                 
@@ -48,7 +49,7 @@ public class ControleurJoueur extends Controleur {
                 if(partie != null) {
                     routeur.push(new ControleurPartie(routeur, new VuePartie(partie), partie));
                 } else {
-                    System.out.println("Veullez entrer une entrée valide");
+                    System.out.println(errorMessage);
                     processInput();
                 }
                 break;
@@ -59,7 +60,7 @@ public class ControleurJoueur extends Controleur {
                 try {
                     personnageId = Integer.parseInt(sc.nextLine());     
                 } catch (NumberFormatException e) {
-                   System.out.println("Veullez entrer une entrée valide");
+                   System.out.println(errorMessage);
                     processInput();
                 }
                 
@@ -67,7 +68,7 @@ public class ControleurJoueur extends Controleur {
                 if(personnage != null) {
                     routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
                 } else {
-                    System.out.println("Veullez entrer une entrée valide");
+                    System.out.println(errorMessage);
                     processInput();
                 }
                 
@@ -82,7 +83,7 @@ public class ControleurJoueur extends Controleur {
                 break;
         
             default:
-                System.out.println("Veullez entrer une entrée valide");
+                System.out.println(errorMessage);
                 processInput();
         }
     }

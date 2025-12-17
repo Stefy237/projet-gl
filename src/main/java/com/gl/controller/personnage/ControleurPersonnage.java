@@ -41,7 +41,7 @@ public class ControleurPersonnage extends Controleur {
         switch (entries[0].trim().toLowerCase()) {
             case "t":
                 if(entries.length != 2) {
-                    System.out.println("Veuillez une entrée valide");
+                    System.out.println("Entrée invalide. Veuillez réessayer.");
                     processInput();
                 }
 
@@ -54,7 +54,7 @@ public class ControleurPersonnage extends Controleur {
 
             case "c":
                 if(entries.length != 2) {
-                    System.out.println("Veuillez une entrée valide");
+                    System.out.println("Entrée invalide. Veuillez réessayer.");
                     processInput();
                 }
                 

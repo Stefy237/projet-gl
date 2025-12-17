@@ -29,9 +29,10 @@ public class ControleurPartie extends Controleur{
 
     @Override
     protected void handleLocalInput(String input) {
-
         PersonnageDAO personnageDAO = new PersonnageDAO();
-        switch (input) {
+        String[] entries = input.split(",");
+
+        switch (entries[0].trim().toLowerCase()) {
             case "1":
                 routeur.push(new ControleurModifierPartie(routeur,new VueModifierPartie(),partie));
                 break;
@@ -46,7 +47,7 @@ public class ControleurPartie extends Controleur{
 
         
             default:
-                System.out.println("Veullez saisir une entrée valide");
+                System.out.println("Entrée invalide. Veuillez réessayer.");
                 processInput();
         }
     }

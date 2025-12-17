@@ -21,7 +21,7 @@ public class Joueur extends Sujet {
     }
 
     public Partie proposerPartie(String titre, Univers univers, String resume) {
-        Partie partie = new Partie(titre, univers, resume);
+        Partie partie = new Partie(titre, univers, resume, this.id);
         informe();
         return partie;
     }

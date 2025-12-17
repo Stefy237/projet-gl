@@ -1,54 +1,104 @@
-# Les dépendances necessaires
+# Guide d'installation 
 
-- java v>17
-- Maven
+## Prérequis
 
-*Accessoirement **sqlite3** et **python 3** pour explorer et construire la bd via les scripts python fournis bien que cela soit possible directement dans le code java, une dépendance sqlite étant inclus dans le pom.xml*
+Avant de commencer, assurez-vous que votre environnement dispose des éléments suivants :
 
-**Pour installer python 3 et sqlite3**
-- Sur Linux
-> ```sudo apt-get install python3```
-> ```sudo apt-get install sqlite3```
+- **Java** : version 17 ou supérieure
+- **Maven** : pour la gestion des dépendances et la compilation
 
-- Sur MacOs
-> rendez-vous sur le site officiel python.org. Ensuite, vous allez cliquer sur « Download »
->
+### Dépendances optionnelles
 
+Pour l'exploration et la construction de la base de données via les scripts Python fournis :
 
-# Compiler l'application
+- **Python 3**
+- **SQLite3**
 
-À la racine du projet (ou se trouve le fichier pom.xml), lancer la commande : ```mvn compile```
+> **Note** : Ces outils sont optionnels car la gestion de la base de données peut être effectuée directement depuis le code Java. Une dépendance SQLite est incluse dans le fichier `pom.xml`.
 
-# Excécuter l'application
+#### Installation des dépendances optionnelles
 
-## Initialiser et peupler la base de donnée
+**Sous Linux :**
+```bash
+sudo apt-get install python3
+sudo apt-get install sqlite3
+```
 
-Vous pouvez le faire de deux manières : 
+**Sous macOS :**
+- Téléchargez Python depuis le site officiel [python.org](https://www.python.org), puis cliquez sur « Download ».
 
-> METHODE RECOMMENDÉE
-**Directement dans le code java**
-Dans le fichier *App.java*, vous avez deux lignes de code commentées : 
-- SQLiteManager.initialize();
-- SQLiteManager.loadTestData();
+- SQLite est généralement installé par défaut sur macOS. Vérifiez avec :
+```bash
+sqlite3 --version
+```
+---
 
-Déommenter les les lors de la première excécution de code puis recommenter les (Sinon, le bd sera détruite et reconstruite à chaque démarrage de l'application)
+## Compilation du projet
 
-La DB sera crée dans un dossier /db au niveau d'où vous lancez l'application.
+Pour compiler l'application, placez-vous à la racine du projet (là où se trouve le fichier `pom.xml`) et exécutez la commande suivante :
 
-**Grâce aux scripts python fournis**
-Si vous avez python3 et sqlite3 installé, vous pouvez initialiser la base de donnée et la peupler en vous plaçant dans le dossier projet-gl/src/main/resources puis en lançant : ```python3 install_bd.py``` puis ```python3 populate.py```
+```bash
+mvn compile
+```
 
-La bd sera crée dans le dossier /resources/db et il sera necessaire de déplacer le dossier /db au niveau de la racine d'où vous lancer l'application afin que l'application puisse la lire.
+---
 
-## Lancer l'application
+## Initialisation de la base de données
 
-Vous pouvez le faire de deux manières : 
-- En utilisant maven : ```mvn compile exec:java```
-- En lançant directement le fichier *App.java*
+Vous disposez de deux méthodes pour initialiser et peupler la base de données.
 
+### Méthode 1 : Initialisation via le code Java (recommandée)
 
+1. Ouvrez le fichier `App.java`
+2. Localisez les deux lignes suivantes (commentées par défaut) :
+   ```java
+   // SQLiteManager.initialize();
+   // SQLiteManager.loadTestData();
+   ```
+3. Décommentez ces lignes lors de la **première exécution**
+4. Après la première exécution, **recommentez-les** pour éviter que la base de données ne soit recréée à chaque démarrage
 
-# Commandes utiles
-nettoyer le projet : ```mvn clean```
-reconstruire le projet : ```mvn compile```
-executer le projet ```mvn compile exec:java```
+> **Emplacement** : La base de données sera créée dans un dossier `/db` à l'emplacement d'où vous lancez l'application.
+
+### Méthode 2 : Initialisation via les scripts Python
+
+Si vous avez installé Python 3 et SQLite3, suivez ces étapes :
+
+1. Placez-vous dans le répertoire `projet-gl/src/main/resources`
+2. Exécutez les commandes suivantes :
+   ```bash
+   python3 install_bd.py
+   python3 populate.py
+   ```
+
+> **Important** : La base de données sera créée dans `/resources/db`. Vous devrez déplacer le dossier `/db` à la racine du projet (là où vous lancez l'application) pour que celle-ci puisse y accéder.
+
+---
+
+## Exécution de l'application
+
+Deux options sont disponibles pour lancer l'application :
+
+### Option 1 : Avec Maven
+```bash
+mvn compile exec:java
+```
+
+### Option 2 : Exécution directe
+Lancez directement le fichier `App.java` depuis votre IDE.
+
+---
+
+## Commandes utiles
+
+| Action | Commande |
+|--------|----------|
+| Nettoyer le projet | `mvn clean` |
+| Compiler le projet | `mvn compile` |
+| Exécuter le projet | `mvn compile exec:java` |
+
+---
+
+## Support
+
+Pour toute question ou problème rencontré lors de l'installation ou de l'utilisation, n'hésitez pas à consulter la documentation du projet ou à contacter l'équipe de développement.

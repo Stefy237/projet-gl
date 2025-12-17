@@ -17,16 +17,20 @@ public class PartieDAO implements DAO<Partie> {
 
     @Override
     public int save(Partie entity) {
-        String sql = "INSERT INTO Partie(titre, resume, validee, jouee, univers_id) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Partie(titre, situation_initiale, resume, jouee, lieu, date, validee, mj_id, univers_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int id = -1;
 
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             pstmt.setString(1, entity.getTitre());
-            pstmt.setString(2, entity.getResume());
-            pstmt.setInt(3, entity.isValidee() ? 1 : 0);
+            pstmt.setString(2, entity.getSituationInitiale());
+            pstmt.setString(3, entity.getResume());
             pstmt.setInt(4, entity.isDejaJouee() ? 1 : 0);
+            pstmt.setString(5, entity.getLieu());
+            pstmt.setString(6, entity.getDate());
+            pstmt.setInt(7, entity.isValidee() ? 1 : 0);
+            pstmt.setInt(4, entity.getMjId());
             pstmt.setInt(5, entity.getUnivers().getId()); 
             
             pstmt.executeUpdate();
@@ -140,17 +144,20 @@ public class PartieDAO implements DAO<Partie> {
 
     @Override
     public void update(Partie entity) {
-        String sql = "UPDATE Partie SET titre = ?, resume = ?, validee = ?, jouee = ?, univers_id = ? WHERE id = ?";
+        String sql = "UPDATE Partie SET titre = ?, resume = ?, validee = ?, jouee = ?, lieu = ?, date = ?, situation_initiale = ?, univers_id = ? WHERE id = ?";
 
         try (Connection conn = SQLiteManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, entity.getTitre());
-            pstmt.setString(2, entity.getResume());
+            pstmt.setString(2,  entity.getResume());
             pstmt.setInt(3, entity.isValidee() ? 1 : 0);
             pstmt.setInt(4, entity.isDejaJouee() ? 1 : 0);
-            pstmt.setInt(5, entity.getUnivers().getId());
-            pstmt.setInt(6, entity.getId());
+            pstmt.setString(5, entity.getLieu());
+            pstmt.setString(6, entity.getDate());
+            pstmt.setString(7, entity.getSituationInitiale());
+            pstmt.setInt(8, entity.getUnivers().getId());
+            pstmt.setInt(9, entity.getId());
 
             pstmt.executeUpdate();
 

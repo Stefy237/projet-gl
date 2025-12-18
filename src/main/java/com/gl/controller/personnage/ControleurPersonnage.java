@@ -61,6 +61,10 @@ public class ControleurPersonnage extends Controleur {
                 int newMjId = Integer.parseInt(entries[1]);
                 Joueur newMJ = joueurDAO.findById(newMjId);
 
+                if(newMJ == null) {
+                    System.out.println("Le joueur mentioné n'existe pas -- Action impossible \n Veuillez ressayer");
+                    processInput();
+                }
                 if(newMJ.getPartieMJ().isEmpty()) {
                     System.out.println("Le joueur mentioné n'est meneur de jeu d'aucune partie -- Action impossible \n Veuillez ressayer");
                     processInput();

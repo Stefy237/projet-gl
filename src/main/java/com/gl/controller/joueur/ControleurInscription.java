@@ -22,21 +22,29 @@ public class ControleurInscription extends Controleur {
         if (input.trim().isEmpty()) {
             System.out.println("Veuillez entrer un nom/pseudo valide");
             processInput();
+            return;
         }
         if(joueurDAO.findByName(input.trim()) != null) {
             System.out.println("Pseudo déja utilisé. Veuillez un choisir un nouveau");
             processInput();
+            return;
         }
 
-        Runnable handleSave = () -> {
-            Joueur joueur = new Joueur(input.trim());
-            joueurDAO.save(joueur);
-            App.setJoueurConnecte(joueur);
-            routeur.pop();
-            routeur.push(new ControleurJoueur(routeur, new VueJoueur(), joueur));
-        };
+        Joueur joueur = new Joueur(input.trim());
+        // int id = joueurDAO.save(joueur);
+        App.setJoueurConnecte(joueur);
+        routeur.pop();
+        routeur.push(new ControleurJoueur(routeur, new VueJoueur(), joueur));
 
-        routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes-vous sûre de vouloir enregistrer cet utilisateur ?"), handleSave));
+        // Runnable handleSave = () -> {
+        //     Joueur joueur = new Joueur(input.trim());
+        //     joueurDAO.save(joueur);
+        //     App.setJoueurConnecte(joueur);
+        //     routeur.pop();
+        //     routeur.push(new ControleurJoueur(routeur, new VueJoueur(), joueur));
+        // };
+
+        // routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes-vous sûre de vouloir enregistrer cet utilisateur ?"), handleSave));
     }
     
 }

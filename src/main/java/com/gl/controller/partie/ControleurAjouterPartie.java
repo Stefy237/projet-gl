@@ -59,6 +59,7 @@ public class ControleurAjouterPartie extends Controleur {
         }
 
         System.out.println("partie creee");
+        routeur.pop();
     }
     
 }

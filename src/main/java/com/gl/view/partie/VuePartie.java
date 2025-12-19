@@ -1,5 +1,10 @@
 package com.gl.view.partie;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 import com.gl.App;
 import com.gl.controller.partie.ControleurPartie;
 import com.gl.model.Observateur;
@@ -37,6 +42,21 @@ public class VuePartie implements Observateur,Vue {
 
         System.out.println(">>>>>>>>> Personnages en attente de validation");
         System.out.println(" Personnage | Personnage id");
+
+        Path path = Path.of("Buffer/Partie/partie"+partie.getId()+".txt");
+
+        
+
+        if (!Files.exists(path)) {
+            System.out.println("Le fichier n'existe pas.");
+            //return;
+        }else{
+            try (Stream<String> lines = Files.lines(path)) {
+                lines.forEach(System.out::println);
+            } catch (IOException e) {
+                System.err.println("Erreur de lecture : " + e.getMessage());
+            }
+        }
         
         if(partie.getMjId() == App.getjoueurConnecte().getId()) {
             if(partie.isDejaJouee()) {

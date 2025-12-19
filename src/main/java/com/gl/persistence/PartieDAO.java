@@ -30,8 +30,8 @@ public class PartieDAO implements DAO<Partie> {
             pstmt.setString(5, entity.getLieu());
             pstmt.setString(6, entity.getDate());
             pstmt.setInt(7, entity.isValidee() ? 1 : 0);
-            pstmt.setInt(4, entity.getMjId());
-            pstmt.setInt(5, entity.getUnivers().getId()); 
+            pstmt.setInt(8, entity.getMjId());
+            pstmt.setInt(9, entity.getUnivers().getId()); 
             
             pstmt.executeUpdate();
 

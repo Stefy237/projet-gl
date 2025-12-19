@@ -49,7 +49,7 @@ public class ControleurAjouterPartie extends Controleur {
 
             Files.writeString(
                 path,
-                ""+partie.getTitre()+" | "+partie.getId()+ System.lineSeparator(), StandardOpenOption.CREATE,
+                ""+partie.getTitre()+" | "+partie.getId()+" | "+partie.getUnivers().getId()+ System.lineSeparator(), StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
             );
 
@@ -59,6 +59,7 @@ public class ControleurAjouterPartie extends Controleur {
         }
 
         System.out.println("partie creee");
+        routeur.pop();
     }
     
 }

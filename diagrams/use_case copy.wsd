@@ -1,0 +1,54 @@
+@startuml projet GL - cas d'usage
+left to right direction
+
+actor Joueur
+actor MeneurJeu
+
+rectangle {
+    usecase "Supprimer proposition" as UC11
+    usecase "Terminer proposition" as UC12
+    usecase "Ajouter personnage" as UC13
+    usecase "Consulter biographie" as UC14
+    usecase "Consulter historique partie" as UC15
+    usecase "Supprimer episode" as UC16
+
+
+
+    usecase "Creer personnage" as UC1
+    usecase "Modifier personnage" as UC2
+    usecase "Modifier épisode" as UC3
+    usecase "Valider épisode" as UC4
+    usecase "Proposer Partie" as UC5
+    usecase "Ceder personnage" as UC6
+    
+    
+    
+    usecase "Ajouter episode" as UC8
+    
+    
+    
+    usecase "Changer status" as UC10
+}
+
+Joueur --> UC1
+Joueur --> UC3
+Joueur --> UC4
+Joueur --> UC6
+Joueur --> UC10
+MeneurJeu --> UC5
+
+Joueur <|-- MeneurJeu
+
+
+
+
+UC2 ..> UC1 : <<extends>>
+
+UC3 ..> UC8 : <<extends>>
+UC4 ..> UC8 : <<extends>>
+
+UC11 ..> UC5 : <<extends>>
+UC12 ..> UC5 : <<extends>>
+UC15 ..> UC12 : <<extends>>
+UC16 ..> UC8 : <<extends>>
+@enduml

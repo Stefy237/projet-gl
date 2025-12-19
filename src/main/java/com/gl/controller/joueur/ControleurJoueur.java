@@ -1,6 +1,11 @@
 package com.gl.controller.joueur;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
@@ -81,10 +86,55 @@ public class ControleurJoueur extends Controleur {
             case "4":
                 routeur.push(new ControleurAjouterPersonnage(routeur, new VueAjouterPersonnage()));
                 break;
+
+            
         
             default:
-                System.out.println(errorMessage);
-                processInput();
+                String[] cmd = input.split(",", -1);
+                if(cmd[0].trim().toLowerCase()=="5"){
+                    Path path = Path.of("Buffer/Partie/partie"+cmd[1]+".txt");
+                    personnage = personnageDAO.findById(Integer.parseInt(cmd[2]));
+
+                    if (!Files.exists(path)) {
+                        System.out.println("Le fichier n'existe pas.");
+                        //return;
+                    }else{
+                        try {
+                            Files.writeString(
+                                path,
+                                ""+personnage.getNom()+" | "+personnage.getId()+ System.lineSeparator(), StandardOpenOption.CREATE,
+                                StandardOpenOption.APPEND
+                            );
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }else{
+                    Path path = Path.of("Buffer/Partie/partie"+cmd[1]+".txt");
+                    System.out.println(cmd[2]);
+                    personnage = personnageDAO.findById(Integer.parseInt(cmd[2]));
+
+                    if (!Files.exists(path)) {
+                        System.out.println("Le fichier n'existe pas.");
+                        //return;
+                    }else{
+                        try {
+                            Files.writeString(
+                                path,
+                                ""+personnage.getNom()+" | "+personnage.getId()+ System.lineSeparator(), StandardOpenOption.CREATE,
+                                StandardOpenOption.APPEND
+                            );
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println(cmd[0]);
+                    System.out.println(errorMessage);
+                    processInput();
+                }
+                
         }
     }
 }

@@ -27,6 +27,8 @@ public class ControleurPartie extends Controleur{
         this.partie = partie;
     }
 
+    PartieDAO partieDAO = new PartieDAO();
+
     @Override
     protected void handleLocalInput(String input) {
         PersonnageDAO personnageDAO = new PersonnageDAO();

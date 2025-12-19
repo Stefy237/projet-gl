@@ -70,8 +70,10 @@ public class VueJoueur implements Observateur, Vue {
 
         System.out.println("""
                 Entrez : 
-                1 - Pour afficher une partie en particulier
-                2 - Pour afficher un personnage en particulier
+                - Pour afficher une partie en particulier
+                    1
+                - Pour afficher un personnage en particulier
+                    2
                 - Pour creer une partie
                     3
                 - Pour creer un personnage

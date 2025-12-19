@@ -59,18 +59,25 @@ public class VuePartie implements Observateur,Vue {
         }
         
         if(partie.getMjId() == App.getjoueurConnecte().getId()) {
+            if(partie.isDejaJouee()) {
+                texte = """
+                        Entrez : 
+                        - Pour accéder à un personnage
+                            go,id du personnage
+                        """;
+            }
             texte = """
                     Entrez : 
                     - Pour modifier la partie
-                        1
+                        m
                     - Pour accéder à un personnage
-                        2,id du personnage
+                        go,id du personnage
                     - Pour marquer la partie comme terminée
-                        3,resumé de la partie
+                        t,resumé de la partie
                     - Pour accepter un personnage
-                        4,id du personnage
+                        ac,id du personnage
                     - Pour supprimer un personnage
-                        5,id du personnage
+                        xp,id du personnage
                     """;
         } else {
             texte = "Entrer r pour revenir au menu précédent";

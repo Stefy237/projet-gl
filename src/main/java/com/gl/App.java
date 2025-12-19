@@ -11,8 +11,8 @@ public class App {
 
         // Pour construire et peupler automatiquement les tables via le code java -- Veuillez décommenter cette commande
         // ATTENTION : À NE FAIRE QU'UNE SEULE FOIS
-        // SQLiteManager.initialize();
-        // SQLiteManager.loadTestData();
+        SQLiteManager.initialize();
+        SQLiteManager.loadTestData();
 
         Routeur routeur = Routeur.getInstance();
         routeur.start(new ControleurAccueil(routeur, new VueAccueil()));

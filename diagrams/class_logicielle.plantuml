@@ -76,9 +76,9 @@ package "Model" #DDFFDD {
   Sujet <|-- Joueur
 }
 
-' =============================
-' === VUE (View) ===
-' =============================
+=============================
+=== VUE (View) ===
+=============================
 package "View" #DDEEFF {
   package "joueur" {
     class VueConnexion {
@@ -150,10 +150,9 @@ package "View" #DDEEFF {
   Vue <|.[#9E9E9E]. VueModifierPersonnage
 }
 
-' Implémentation du partern observateur
+Implémentation du partern observateur
 
 Observateur <|.. VuePartie
-Observateur <|.. VueEpisode
 Observateur <|.. VueBiographie
 Observateur <|.. VueJoueur
 
@@ -250,7 +249,7 @@ package "Controller" #FFE4B5 {
   Controleur .. Commande
   ControleurConfirmation .. Commande
 }
-' === Relations MVC ===
+=== Relations MVC ===
 ControleurPartie --> Partie
 ControleurJoueur --> Joueur
 ControleurPersonnage --> Personnage
@@ -336,8 +335,10 @@ package "Persistence" #FFF2CC {
   ParagrapheDAO <-- ControleurParagraphe : gère la persistance >
 }
 
-' Alignement vertical (vue du haut vers le bas)
-' Model -[hidden]down-> Controller
-' Controller -[hidden]down-> Persistence
+
+' ' Alignement vertical (vue du haut vers le bas)
+' ' Model -[hidden]down-> Controller
+' ' Controller -[hidden]down-> Persistence
+' "Controller" -[hidden]right- "Model"
 
 @enduml

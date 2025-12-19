@@ -19,6 +19,7 @@ import com.gl.view.personnage.VuePersonnage;
 
 public class ControleurPartie extends Controleur{
     private Partie partie;
+    private PartieDAO partieDAO = new PartieDAO();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -33,29 +34,30 @@ public class ControleurPartie extends Controleur{
         String[] entries = input.split(",");
 
         switch (entries[0].trim().toLowerCase()) {
-            case "1":
+            case "m":
                 routeur.push(new ControleurModifierPartie(routeur,new VueModifierPartie(),partie));
                 break;
             
-            case "2":
+            case "go":
                 int id = Integer.parseInt(entries[1]);
                 Personnage personnage = personnageDAO.findById(id);
                 routeur.push(new ControleurPersonnage(routeur, new VuePersonnage(personnage), personnage));
                 break;
 
-            case "3":
+            case "t":
                 String resume = entries[1];
                 partie.setResume(resume);
                 partie.setDejaJouee(true);
+                partieDAO.update(partie);
                 break;
 
-            case "4":
+            case "ac":
                 id = Integer.parseInt(entries[1]);
                 personnage = personnageDAO.findById(id);
                 partie.ajouterPersonnage(personnage);
                 break;
 
-            case "5":
+            case "xp":
                  id = Integer.parseInt(entries[1]);
                  personnage = personnageDAO.findById(id);
                  partie.supprimerPersonnage(personnage);

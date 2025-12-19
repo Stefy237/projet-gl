@@ -1,5 +1,8 @@
 package com.gl.controller.biographie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.gl.App;
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
@@ -7,8 +10,12 @@ import com.gl.controller.ControleurConfirmation;
 import com.gl.model.Biographie;
 import com.gl.model.Episode;
 import com.gl.model.Paragraphe;
+import com.gl.model.Partie;
+import com.gl.model.Personnage;
 import com.gl.persistence.EpisodeDAO;
 import com.gl.persistence.ParagrapheDAO;
+import com.gl.persistence.PartieDAO;
+import com.gl.persistence.PersonnageDAO;
 import com.gl.view.Vue;
 import com.gl.view.VueConfirmation;
 
@@ -16,6 +23,9 @@ public class ControleurBiographie extends Controleur {
     private  Biographie biographie;
     private EpisodeDAO episodeDAO = new EpisodeDAO();
     private ParagrapheDAO paragrapheDAO = new ParagrapheDAO();
+    private PersonnageDAO personnageDAO = new PersonnageDAO();
+    private PartieDAO partieDAO = new PartieDAO();
+
 
     public ControleurBiographie(Routeur routeur, Vue vue, Biographie biographie) {
         super(routeur, vue);
@@ -39,6 +49,34 @@ public class ControleurBiographie extends Controleur {
 
                 Episode episode = new Episode(entries[2]);
                 if(Integer.parseInt(entries[1]) == 0) {
+                    Personnage personnage = personnageDAO.findById(biographie.getPersonnageId());
+                    List <Partie> allParties = partieDAO.findAll();
+                    List <Partie> aventures = new ArrayList<>();
+                    for (Partie partie : allParties) {
+                        if(partie.getPersonnages().contains(personnage) && partie.isDejaJouee()) {
+                            aventures.add(partie);
+                        }
+                    }
+
+                    if(!aventures.isEmpty()) {
+                        System.out.println("Liste des aventures auxquelles vous pouvez lié cet épisode :");
+                        for (Partie partie : aventures) {
+                            System.out.println(" - " + partie.getId() + " : " + partie.getTitre());
+                        }
+                        System.out.println("Entrez l'id de l'aventure à laquelle vous souhaitez lier cet épisode. \n Sinon, appuyez sur Entrée pour ne pas le lier à une aventure.");
+                        String aventureInput = scanner.nextLine();
+                        try {
+                            int aventureId = Integer.parseInt(aventureInput);
+                            Partie aventureChoisie = partieDAO.findById(aventureId);
+                            if (aventureChoisie != null && aventures.contains(aventureChoisie)) {
+                                episode.setRelatedAventureId(aventureChoisie.getId());
+                            } else {
+                                System.out.println("Aventure non trouvée. L'épisode ne sera pas lié à une aventure.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Entrée invalide. L'épisode ne sera pas lié à une aventure.");
+                        }
+                    }
                     episode.setRelatedBiographieId(biographie.getId());
                     episodeId = episodeDAO.save(episode);
 

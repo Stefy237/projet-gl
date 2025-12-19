@@ -168,7 +168,7 @@ public class JoueurDAO implements DAO<Joueur> {
     private List<Personnage> findPersonnagesByJoueurId(int id) {
         PersonnageDAO personnageDAO = new PersonnageDAO();
         List<Personnage> personnages = new ArrayList<>();
-        String sql = "SELECT  partie_id, personnage_id FROM Participation WHERE joueur_id = ? ";
+        String sql = "SELECT DISTINCT partie_id, personnage_id FROM Participation WHERE joueur_id = ? ";
         
         try (Connection conn = SQLiteManager.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -196,7 +196,7 @@ public class JoueurDAO implements DAO<Joueur> {
     private List<Partie> findPartieMjByJoueurId(int id) {
         PartieDAO partieDAO = new PartieDAO();
         List<Partie> parties = new ArrayList<>();
-        String sql = "SELECT  partie_id  FROM Participation WHERE mj_id = ? ";
+        String sql = "SELECT  DISTINCT partie_id  FROM Participation WHERE mj_id = ? ";
 
         try (Connection conn = SQLiteManager.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {

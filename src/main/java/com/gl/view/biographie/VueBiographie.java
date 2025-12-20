@@ -59,17 +59,17 @@ public class VueBiographie extends Vue implements Observateur {
 
             - Pour modifier épisode :
                 * Le titre d'un épisode
-                    me, t, numéro de l'épisode, nouveau titre de l'épisode
+                    me,t,numéro de l'épisode, nouveau titre de l'épisode
                 * Le titre d'un paragraphe
-                    mp, t, numéro du paragraphe, nouveau titre du paragraphe
+                    mp,t,numéro du paragraphe, nouveau titre du paragraphe
                 * Le contenu d'un paragraphe
-                    mp, c, numéro du paragraphe, nouveau contenu du paragraphe
+                    mp,c,numéro du paragraphe, nouveau contenu du paragraphe
                     
             - Pour valider un épisode
                 ve, numéro de l'épisode
 
             - Pour supprimer paragraphe
-                xp, numéro du paragraphe
+                xp,numéro du paragraphe
 
             - Pour supprimer un épisode
                 xe,numéro de l'épisode

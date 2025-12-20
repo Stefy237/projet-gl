@@ -40,25 +40,26 @@ public class VuePartie extends Vue implements Observateur {
             System.out.println(  personnage.getNom() + " | " + personnage.getId());
         }
 
-        System.out.println(">>>>>>>>> Personnages en attente de validation");
-        System.out.println(" Personnage | Personnage id");
-
-        Path path = Path.of("Buffer/Partie/partie"+partie.getId()+".txt");
-
-        
-
-        if (!Files.exists(path)) {
-            System.out.println("Aucun personnage en attente de validation.");
-            //return;
-        }else{
-            try (Stream<String> lines = Files.lines(path)) {
-                lines.forEach(System.out::println);
-            } catch (IOException e) {
-                System.err.println("Erreur de lecture : " + e.getMessage());
-            }
-        }
         
         if(partie.getMjId() == App.getjoueurConnecte().getId()) {
+            System.out.println(">>>>>>>>> Personnages en attente de validation");
+            System.out.println(" Personnage | Personnage id");
+
+            Path path = Path.of("Buffer/Partie/partie"+partie.getId()+".txt");
+
+            
+
+            if (!Files.exists(path)) {
+                System.out.println("Aucun personnage en attente de validation.");
+                //return;
+            }else{
+                try (Stream<String> lines = Files.lines(path)) {
+                    lines.forEach(System.out::println);
+                } catch (IOException e) {
+                    System.err.println("Erreur de lecture : " + e.getMessage());
+                }
+            }
+
             if(partie.isDejaJouee()) {
                 texte = """
                         Entrez : 
@@ -78,7 +79,11 @@ public class VuePartie extends Vue implements Observateur {
                         xp,id du personnage
                     """;
         } else {
-            texte = "Entrer r pour revenir au menu précédent";
+            texte = """
+                    Entrez : 
+                        - Pour accéder à un personnage
+                            go,id du personnage
+                    """;
         }
 
         System.out.println(texte);

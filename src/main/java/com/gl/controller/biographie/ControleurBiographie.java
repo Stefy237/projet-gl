@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gl.App;
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
 import com.gl.controller.ControleurConfirmation;
+import com.gl.controller.Routeur;
 import com.gl.model.Biographie;
 import com.gl.model.Episode;
 import com.gl.model.Paragraphe;
@@ -18,6 +18,7 @@ import com.gl.persistence.PartieDAO;
 import com.gl.persistence.PersonnageDAO;
 import com.gl.view.Vue;
 import com.gl.view.VueConfirmation;
+import com.gl.view.biographie.VueBiographie;
 
 public class ControleurBiographie extends Controleur {
     private  Biographie biographie;
@@ -42,7 +43,7 @@ public class ControleurBiographie extends Controleur {
         
         switch (entries[0].trim().toLowerCase()) {
             case "a":
-                if (entries.length != 4) {
+                if (entries.length != 6) {
                     System.out.println(errorMessage);
                     return;
                 }
@@ -76,22 +77,27 @@ public class ControleurBiographie extends Controleur {
                         } catch (NumberFormatException e) {
                             System.out.println("Entrée invalide. L'épisode ne sera pas lié à une aventure.");
                         }
-                    }
+                    } 
+                    
+                    System.out.println("Ce personnage n'a aucune aventure à laquelle vous pouvez lié ce nouvel épisode");
                     episode.setRelatedBiographieId(biographie.getId());
                     episodeId = episodeDAO.save(episode);
 
                     Paragraphe paragraphe = new Paragraphe(entries[3], entries[4], Integer.parseInt(entries[5]) == 1);
                     paragraphe.setEpisodeId(episodeId);
                     paragrapheDAO.save(paragraphe);
+
+                    System.out.println("Aventure crée avec succès");
+                    routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                 } else if (episodeDAO.findById(Integer.parseInt(entries[1])) != null) {
                     if(episode.isJoueurValide() && episode.isMjValide()) {
                         System.out.println("Cet épisode est déjà validé et ne peut pas être modifié.");
-                        routeur.pop();
+                        routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                     }
                     Paragraphe paragraphe = new Paragraphe(entries[3], entries[4], Integer.parseInt(entries[5]) == 1);
                     paragraphe.setEpisodeId(Integer.parseInt(entries[1]));
                     paragrapheDAO.save(paragraphe);
-                    routeur.pop();
+                    routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                 } else {
                     System.out.println(errorMessage);
                 }
@@ -108,6 +114,7 @@ public class ControleurBiographie extends Controleur {
                     handleYes = () -> {
                         paragraphe.rendrePublique();
                         paragrapheDAO.update(paragraphe);
+                        routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                     };
                     routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir rendre ce paragrphe public ?"), handleYes));
                 } else {
@@ -125,7 +132,7 @@ public class ControleurBiographie extends Controleur {
                     if (entries[1].trim().equalsIgnoreCase("t")) {
                         episodeAmodifier.setTitre(entries[3]);
                         episodeDAO.update(episodeAmodifier);
-                        routeur.pop();
+                        routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                     } else {
                         System.out.println(errorMessage);
                         return;
@@ -150,6 +157,7 @@ public class ControleurBiographie extends Controleur {
                             episodeAvalider.setMjValide(true);
                         }
                         episodeDAO.update(episodeAvalider);
+                        routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                     };
                     routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir valider cet épisode ?"), handleYes));
                 } else {
@@ -162,6 +170,7 @@ public class ControleurBiographie extends Controleur {
                 }
                 handleYes = () -> {
                     paragrapheDAO.delete(Integer.parseInt(entries[1]));
+                    routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                 };
                 routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir supprimer ce paragraphe ?"), handleYes));
                 break;
@@ -172,6 +181,7 @@ public class ControleurBiographie extends Controleur {
                 }
                 handleYes = () -> {
                     episodeDAO.delete(Integer.parseInt(entries[1]));
+                    routeur.push(new ControleurBiographie(routeur, new VueBiographie(biographie, VueBiographie.Type.PRIVEE), biographie));
                 };
                 routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir supprimer cet épisode ?"), handleYes));
                 break;

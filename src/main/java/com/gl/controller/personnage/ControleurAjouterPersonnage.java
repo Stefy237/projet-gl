@@ -1,8 +1,8 @@
 package com.gl.controller.personnage;
 
 import com.gl.App;
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.Routeur;
 import com.gl.model.Biographie;
 import com.gl.model.Episode;
 import com.gl.model.Paragraphe;

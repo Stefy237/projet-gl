@@ -1,9 +1,7 @@
-package com.gl;
+package com.gl.controller;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-
-import com.gl.controller.Controleur;
 
 public class Routeur {
     private static Routeur instance = new Routeur();

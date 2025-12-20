@@ -1,0 +1,20 @@
+@startuml episode_states
+
+[*] --> Modifie : Création
+Modifie --> Modifie : Edition (titre/contenu)
+
+state "Validation en cours" as Validation {
+  [*] --> EnAttente
+  EnAttente --> JoueurValide : Validation Joueur
+  EnAttente --> MJValide : Validation MJ
+  JoueurValide --> Valide : Validation MJ
+  MJValide --> Valide : Validation Joueur
+}
+
+Modifie --> Validation : Demande de validation
+Validation --> Modifie : Modification
+Valide --> [*] : Terminé
+Modifie --> Supprime : Action supprimer
+Validation --> Supprime : Action supprimer
+Supprime --> [*]
+@enduml

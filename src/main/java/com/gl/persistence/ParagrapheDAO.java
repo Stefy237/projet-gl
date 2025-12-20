@@ -130,7 +130,7 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
     }
     
     public Episode findEpisodeById(int episodeId) {
-        String sql1 = "SELECT id, titre, biographie_id, aventure_id FROM Episode WHERE id = ?";
+        String sql1 = "SELECT id, titre, joueur_valide, mj_valide, biographie_id, aventure_id FROM Episode WHERE id = ?";
         String sql2 = "SELECT id, titre, contenu, is_private FROM Paragraphe WHERE episode_id = ?";
 
         Episode episode = null;
@@ -147,11 +147,15 @@ public class ParagrapheDAO implements DAO<Paragraphe> {
                     String titre = rs1.getString("titre");
                     int biographieId = rs1.getInt("biographie_id");
                     int aventureId = rs1.getInt("aventure_id"); 
+                    int joueurValide = rs1.getInt("joueur_valide");
+                    int mjValide = rs1.getInt("mj_valide");
                     
                     episode = new Episode(titre); 
                     episode.setRelatedBiographieId(biographieId);
                     episode.setRelatedAventureId(aventureId);
                     episode.setId(episodeId);
+                    episode.setJoueurValide(joueurValide == 1);
+                    episode.setMjValide(mjValide == 1);
                 } 
             } 
 

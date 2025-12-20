@@ -1,6 +1,5 @@
 package com.gl.controller;
 
-import com.gl.Routeur;
 import com.gl.view.Vue;
 
 public class ControleurConfirmation extends Controleur {

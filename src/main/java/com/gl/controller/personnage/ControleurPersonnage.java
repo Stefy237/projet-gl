@@ -14,8 +14,8 @@ import com.gl.view.biographie.VueBiographie;
 import com.gl.view.partie.VuePartie;
 
 import com.gl.App;
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.Routeur;
 import com.gl.controller.biographie.ControleurBiographie;
 import com.gl.controller.partie.ControleurPartie;
 

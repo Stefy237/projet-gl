@@ -7,8 +7,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.Routeur;
 import com.gl.controller.partie.ControleurAjouterPartie;
 import com.gl.controller.partie.ControleurPartie;
 import com.gl.controller.personnage.ControleurAjouterPersonnage;

@@ -76,9 +76,9 @@ package "Model" #DDFFDD {
   Sujet <|-- Joueur
 }
 
-=============================
-=== VUE (View) ===
-=============================
+' =============================
+' === VUE (View) ===
+' =============================
 package "View" #DDEEFF {
   package "joueur" {
     class VueConnexion {
@@ -150,7 +150,7 @@ package "View" #DDEEFF {
   Vue <|.[#9E9E9E]. VueModifierPersonnage
 }
 
-Implémentation du partern observateur
+' Implémentation du partern observateur
 
 Observateur <|.. VuePartie
 Observateur <|.. VueBiographie
@@ -182,9 +182,6 @@ package "Controller" #FFE4B5 {
 
     }
 
-    class ControleurModifierParagraphe {
-
-    }
   }
   package "partie" {
     class ControleurPartie {
@@ -196,9 +193,6 @@ package "Controller" #FFE4B5 {
 
     }
 
-    class ControleurModifierPartie {
-
-    }
   }
   package "personnage" {
     class ControleurPersonnage {
@@ -209,9 +203,6 @@ package "Controller" #FFE4B5 {
       +void modifierPersonnage()
     }
 
-    class ControleurModifierPersonnage {
-
-    }
   }
 
   enum Commande {
@@ -238,13 +229,10 @@ package "Controller" #FFE4B5 {
   Controleur <|-[#9E9E9E]- ControleurAccueil
   Controleur <|-[#9E9E9E]- ControleurBiographie
   Controleur <|-[#9E9E9E]- ControleurAjouterParagraphe 
-  Controleur <|-[#9E9E9E]- ControleurModifierParagraphe
   Controleur <|-[#9E9E9E]- ControleurPartie
   Controleur <|-[#9E9E9E]- ControleurAjouterPartie
-  Controleur <|-[#9E9E9E]- ControleurModifierPartie
   Controleur <|-[#9E9E9E]- ControleurPersonnage
   Controleur <|-[#9E9E9E]- ControleurAjouterPersonnage
-  Controleur <|-[#9E9E9E]- ControleurModifierPersonnage
 
   Controleur .. Commande
   ControleurConfirmation .. Commande

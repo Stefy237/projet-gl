@@ -1,0 +1,171 @@
+@startuml vue - controleur
+
+' =============================
+' === PARAMÈTRES GLOBAUX ===
+' =============================
+skinparam ranksep 100
+skinparam nodesep 80
+skinparam linetype ortho
+left to right direction
+
+' =============================
+' === VUE (View) ===
+' =============================
+package "View" #DDEEFF {
+  package "joueur" {
+    class VueConnexion {
+    }
+
+    class VueJoueur {
+    }
+
+    class VueAccueil{
+    }
+  }
+  package "biographie" {
+    class VueBiographie {
+    }
+  }
+  package "partie" {
+    class VuePartie {
+    }
+
+    class VueAjouterPartie {
+
+    }
+
+  }
+  package "personnage" {
+    class VuePersonnage {
+    }
+    
+    class VueAjouterPersonnage {
+
+    }
+  }
+
+  abstract class Vue {
+    +afficher()
+    +doitEtreAfficher()
+    +setBesoinAffichage()
+  }
+
+  class VueConfirmation {
+
+  }
+
+  Vue <|-[#9E9E9E]- VueConfirmation
+  Vue <|-[#9E9E9E]- VueConnexion
+  Vue <|-[#9E9E9E]- VueJoueur
+  Vue <|-[#9E9E9E]- VueAccueil
+  Vue <|-[#9E9E9E]- VueBiographie
+  Vue <|-[#9E9E9E]- VuePartie
+  Vue <|-[#9E9E9E]- VueAjouterPartie
+  Vue <|-[#9E9E9E]- VuePersonnage
+  Vue <|-[#9E9E9E]- VueAjouterPersonnage
+}
+
+' =============================
+' === CONTROLEUR (Controller) ===
+' =============================
+package "Controller" #FFE4B5 {
+  package "joueur" {
+    class ControleurConnexion {
+    }
+
+    class ControleurJoueur {
+      +Joueur creerJoueur()
+      +void modifierJoueur(
+    }
+
+    class ControleurAccueil{
+    }
+  }
+  package "biographie" {
+    class ControleurBiographie {
+      +Biographie creerBiographie()
+      +void modifierBiographie()
+    }
+
+    class ControleurAjouterParagraphe {
+
+    }
+
+  }
+  package "partie" {
+    class ControleurPartie {
+      +Partie creerPartie()
+      +void modifierPartie()
+    }
+
+    class ControleurAjouterPartie {
+
+    }
+
+  }
+  package "personnage" {
+    class ControleurPersonnage {
+    }
+    
+    class ControleurAjouterPersonnage {
+      +Personnage creerPersonnage()
+      +void modifierPersonnage()
+    }
+
+  }
+
+  enum Commande {
+    FERMER,
+    QUITTER,
+    RETOUR,
+    ACCEPTER,
+    REFUSER,
+  }
+
+  abstract class Controleur {
+    ~ abstract void handleLocalInput(String input);
+    + void processInput()
+    + void handleGlobalCommand(Commande cmd)
+  }
+
+  class ControleurConfirmation {
+
+  }
+
+  class Router {
+    - this isntance
+    - List historique
+    - boolean isRunning
+    + this getInstance()
+    + void pop()
+    + void push()
+    + void start()
+    + void stop()
+    + void backToHome()
+    + void backToRoot()
+  }
+
+  Controleur <|-[#9E9E9E]- ControleurConfirmation
+  Controleur <|-[#9E9E9E]- ControleurConnexion
+  Controleur <|-[#9E9E9E]- ControleurJoueur
+  Controleur <|-[#9E9E9E]- ControleurAccueil
+  Controleur <|-[#9E9E9E]- ControleurBiographie
+  Controleur <|-[#9E9E9E]- ControleurAjouterParagraphe 
+  Controleur <|-[#9E9E9E]- ControleurPartie
+  Controleur <|-[#9E9E9E]- ControleurAjouterPartie
+  Controleur <|-[#9E9E9E]- ControleurPersonnage
+  Controleur <|-[#9E9E9E]- ControleurAjouterPersonnage
+
+  Controleur .. Commande
+  ControleurConfirmation .. Commande
+
+  Router <-- Controleur
+}
+
+VuePartie --> ControleurPartie
+VueJoueur --> ControleurJoueur
+VuePersonnage --> ControleurPersonnage
+VueBiographie --> ControleurBiographie
+VueConnexion --> ControleurJoueur
+VueAccueil --> ControleurJoueur
+@enduml

@@ -1,0 +1,20 @@
+@startuml partie_states
+title Cycle de vie d'une Partie
+
+[*] --> Proposee : Création (validee = 0)
+Proposee --> Modifiee : Modification MJ
+Modifiee --> Modifiee
+Modifiee --> Supprimee
+Modifiee --> EnCours
+
+Proposee --> EnCours : Validation (validee = 1)
+' EnCours --> Modifiee : Ajustement MJ
+EnCours --> Fini : Clôture (jouee = 1)
+
+Proposee --> Supprimee : Action supprimer
+' EnCours --> Supprimee : Action supprimer
+' Fini --> Supprimee : Action supprimer
+
+Fini --> [*]
+Supprimee --> [*]
+@enduml

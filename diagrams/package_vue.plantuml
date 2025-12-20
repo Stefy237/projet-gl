@@ -1,0 +1,69 @@
+@startuml package vue
+
+' =============================
+' === PARAMÈTRES GLOBAUX ===
+' =============================
+skinparam ranksep 120
+skinparam nodesep 100
+skinparam linetype ortho
+left to right direction
+
+' =============================
+' === VUE (View) ===
+' =============================
+package "View" #DDEEFF {
+  package "joueur" {
+    class VueConnexion {
+    }
+
+    class VueJoueur {
+    }
+
+    class VueAccueil{
+    }
+  }
+  package "biographie" {
+    class VueBiographie {
+    }
+  }
+  package "partie" {
+    class VuePartie {
+    }
+
+    class VueAjouterPartie {
+
+    }
+
+  }
+  package "personnage" {
+    class VuePersonnage {
+    }
+    
+    class VueAjouterPersonnage {
+
+    }
+  }
+
+  abstract class Vue {
+    +afficher()
+    +doitEtreAfficher()
+    +setBesoinAffichage()
+  }
+
+  class VueConfirmation {
+
+  }
+
+  Vue <|-[#9E9E9E]- VueConfirmation
+  Vue <|-[#9E9E9E]- VueConnexion
+  Vue <|-[#9E9E9E]- VueJoueur
+  Vue <|-[#9E9E9E]- VueAccueil
+  Vue <|-[#9E9E9E]- VueBiographie
+  Vue <|-[#9E9E9E]- VuePartie
+  Vue <|-[#9E9E9E]- VueAjouterPartie
+  Vue <|-[#9E9E9E]- VuePersonnage
+  Vue <|-[#9E9E9E]- VueAjouterPersonnage
+}
+
+
+@enduml

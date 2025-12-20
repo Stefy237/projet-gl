@@ -2,8 +2,8 @@ package com.gl.controller.partie;
 
 import java.util.Scanner;
 
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.Routeur;
 import com.gl.controller.personnage.ControleurPersonnage;
 import com.gl.model.Partie;
 import com.gl.model.Personnage;

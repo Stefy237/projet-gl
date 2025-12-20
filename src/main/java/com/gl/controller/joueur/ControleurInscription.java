@@ -1,9 +1,9 @@
 package com.gl.controller.joueur;
 
 import com.gl.App;
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
 import com.gl.controller.ControleurConfirmation;
+import com.gl.controller.Routeur;
 import com.gl.model.Joueur;
 import com.gl.persistence.JoueurDAO;
 import com.gl.view.Vue;

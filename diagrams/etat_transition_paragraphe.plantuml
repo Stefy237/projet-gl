@@ -1,0 +1,8 @@
+@startuml paragraphe_states
+Left to Right Direction
+[*] --> Prive : Création par défaut
+Prive --> Public : Action rendrePublique()
+Prive --> Supprime : Action supprimer
+Public --> Supprime : Action supprimer
+Supprime --> [*]
+@enduml

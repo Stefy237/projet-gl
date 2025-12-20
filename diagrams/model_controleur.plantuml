@@ -1,0 +1,207 @@
+@startuml model - controleur
+
+' =============================
+' === PARAMÈTRES GLOBAUX ===
+' =============================
+skinparam ranksep 100
+skinparam nodesep 80
+skinparam linetype ortho
+left to right direction
+
+' =============================
+' === MODELE (Model) ===
+' =============================
+package "Model" #DDFFDD {
+
+  enum Univers {
+    FANTASY
+    SCIENCE_FICTION
+    HISTORIQUE
+    MODERNE
+    POST_APOCALYPTIQUE
+  }
+
+  abstract class Sujet {
+    -List<Observateur> observateurs
+    +attache(Observateur o)
+    +detache(Observateur o)
+    +informe()
+  }
+
+  interface Observateur {
+    +miseAJour()
+  }
+
+  class Joueur {
+    -int id
+    -String pseudo
+    -List<Personnage> personnages
+    -List<Partie> partiesMJ
+    +Personnage creerPersonnage(String nom, String naissanceDate, String profession, Univers univers, Biographie bioInitiale)
+    +Partie proposerPartie(String titre, Univers univers, String resume)
+    +void validerEpisode(Episode e)
+  }
+
+  class Personnage {
+    -int id
+    -String nom
+    -String profession
+    -String naissanceDate
+    -String imagePath
+    -int partieId
+    +void supprimer()
+  }
+
+  class Partie {
+    -int id
+    -String titre
+    -String resume
+    -boolean validee
+    -boolean dejaJouee
+    -int mjId
+    +void valider()
+    +void ajouterPersonnage(Personnage p)
+    +void supprimerPersonnage(Personnage p)
+    +void jouer()
+  }
+
+  class Biographie {
+    -int id
+    -String titre
+    -int personnageId
+    +void ajouterEpisode(Episode e)
+  }
+
+  class Episode {
+    -int id
+    -String titre
+    -boolean joueurValide
+    -boolean mjValide
+    -String dateCreation
+    -int biographieId
+    -int aventureId
+    +void ajouterParagraphe(Paragraphe p)
+    +void valider()
+  }
+
+  class Paragraphe {
+    -int id
+    -String titre
+    -String contenu
+    -boolean isPrivate
+    +void rendrePublique()
+  }
+
+  ' --- RELATIONS D'HÉRITAGE (PATTERN OBSERVER) ---
+  Sujet <|-- Joueur
+  Sujet <|-- Partie
+  Sujet <|-- Personnage
+  Sujet <|-- Biographie
+  Sujet <|-- Episode
+  Sujet <|-- Paragraphe
+
+}
+
+' =============================
+' === CONTROLEUR (Controller) ===
+' =============================
+package "Controller" #FFE4B5 {
+  package "joueur" {
+    class ControleurConnexion {
+    }
+
+    class ControleurJoueur {
+      +Joueur creerJoueur()
+      +void modifierJoueur(
+    }
+
+    class ControleurAccueil{
+    }
+  }
+  package "biographie" {
+    class ControleurBiographie {
+      +Biographie creerBiographie()
+      +void modifierBiographie()
+    }
+
+    class ControleurAjouterParagraphe {
+
+    }
+
+  }
+  package "partie" {
+    class ControleurPartie {
+      +Partie creerPartie()
+      +void modifierPartie()
+    }
+
+    class ControleurAjouterPartie {
+
+    }
+
+  }
+  package "personnage" {
+    class ControleurPersonnage {
+    }
+    
+    class ControleurAjouterPersonnage {
+      +Personnage creerPersonnage()
+      +void modifierPersonnage()
+    }
+
+  }
+
+  enum Commande {
+    FERMER,
+    QUITTER,
+    RETOUR,
+    ACCEPTER,
+    REFUSER,
+  }
+
+  abstract class Controleur {
+    ~ abstract void handleLocalInput(String input);
+    + void processInput()
+    + void handleGlobalCommand(Commande cmd)
+  }
+
+  class ControleurConfirmation {
+
+  }
+
+  class Router {
+    - this isntance
+    - List historique
+    - boolean isRunning
+    + this getInstance()
+    + void pop()
+    + void push()
+    + void start()
+    + void stop()
+    + void backToHome()
+    + void backToRoot()
+  }
+
+  Controleur <|-[#9E9E9E]- ControleurConfirmation
+  Controleur <|-[#9E9E9E]- ControleurConnexion
+  Controleur <|-[#9E9E9E]- ControleurJoueur
+  Controleur <|-[#9E9E9E]- ControleurAccueil
+  Controleur <|-[#9E9E9E]- ControleurBiographie
+  Controleur <|-[#9E9E9E]- ControleurAjouterParagraphe 
+  Controleur <|-[#9E9E9E]- ControleurPartie
+  Controleur <|-[#9E9E9E]- ControleurAjouterPartie
+  Controleur <|-[#9E9E9E]- ControleurPersonnage
+  Controleur <|-[#9E9E9E]- ControleurAjouterPersonnage
+
+  Controleur .. Commande
+  ControleurConfirmation .. Commande
+
+  Router <-- Controleur
+}
+
+ControleurPartie --> Partie
+ControleurJoueur --> Joueur
+ControleurPersonnage --> Personnage
+ControleurBiographie --> Biographie
+
+@enduml

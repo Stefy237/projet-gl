@@ -1,7 +1,7 @@
 package com.gl.controller.joueur;
 
-import com.gl.Routeur;
 import com.gl.controller.Controleur;
+import com.gl.controller.Routeur;
 import com.gl.view.Vue;
 import com.gl.view.joueur.VueConnexion;
 import com.gl.view.joueur.VueInscription;

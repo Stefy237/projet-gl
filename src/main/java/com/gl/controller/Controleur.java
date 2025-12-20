@@ -2,7 +2,6 @@ package com.gl.controller;
 
 import java.util.Scanner;
 
-import com.gl.Routeur;
 import com.gl.view.Vue;
 
 public abstract class Controleur {

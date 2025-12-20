@@ -10,7 +10,7 @@ public class VueAccueil extends Vue {
             COMMANDES GLOBABLES : Ces commandes fonctionne tout le long du programme
                 - x : pour fermer l'application
                 - q : pour se deconnecter l'application -> revenir sur la page d'accueil
-                - h : pour revenir à l'accueil
+                - h : pour revenir à la page du joueur
                 - r : pour revenir à la page précedente
             ---------------------------------------------------------------------------------------
             - Pour vous connecter taper 1

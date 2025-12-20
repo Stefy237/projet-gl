@@ -48,7 +48,7 @@ public class VuePartie extends Vue implements Observateur {
         
 
         if (!Files.exists(path)) {
-            System.out.println("Le fichier n'existe pas.");
+            System.out.println("Aucun personnage en attente de validation.");
             //return;
         }else{
             try (Stream<String> lines = Files.lines(path)) {

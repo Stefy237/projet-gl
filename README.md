@@ -50,13 +50,12 @@ Vous disposez de deux méthodes pour initialiser et peupler la base de données.
 ### Méthode 1 : Initialisation via le code Java (recommandée)
 
 1. Ouvrez le fichier `App.java`
-2. Localisez les deux lignes suivantes (commentées par défaut) :
+2. Localisez les deux lignes suivantes :
    ```java
-   // SQLiteManager.initialize();
-   // SQLiteManager.loadTestData();
+   SQLiteManager.initialize();
+   SQLiteManager.loadTestData();
    ```
-3. Décommentez ces lignes lors de la **première exécution**
-4. Après la première exécution, **recommentez-les** pour éviter que la base de données ne soit recréée à chaque démarrage
+3. Après la première exécution, **Commentez-les** pour éviter que la base de données ne soit recréée à chaque démarrage
 
 > **Emplacement** : La base de données sera créée dans un dossier `/db` à l'emplacement d'où vous lancez l'application.
 

@@ -57,7 +57,7 @@ public class VueJoueur extends Vue implements Observateur {
         
 
         if (!Files.exists(path)) {
-            System.out.println("Le fichier n'existe pas.");
+            System.out.println("Aucune proposition de partie.");
             //return;
         }else{
             try (Stream<String> lines = Files.lines(path)) {

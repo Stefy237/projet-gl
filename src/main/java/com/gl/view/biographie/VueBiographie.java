@@ -55,7 +55,7 @@ public class VueBiographie extends Vue implements Observateur {
 
             - Pour rendre un paragraphe pubic
                 p, numéro du paragraphe
-                ex : p,1,10
+                ex : p,10
 
             - Pour modifier épisode :
                 * Le titre d'un épisode

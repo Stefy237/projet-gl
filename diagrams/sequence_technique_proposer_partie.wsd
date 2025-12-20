@@ -2,15 +2,16 @@
 actor Joueur
 
 Joueur -> Vue_joueur: command_proposer(args...)
-Vue_joueur -> Controleur_partie: command_proposer(args...)
-activate Controleur_partie
-Controleur_partie -> Controleur_partie : Proposer_partie(titre, univers, resume initiale, date, lieu)
+Vue_joueur -> Controleur_joueur: command_proposer(args...)
+Controleur_joueur -> Controleur_Ajouter_partie: command_proposer(args...)
+activate Controleur_Ajouter_partie
+Controleur_Ajouter_partie -> Controleur_Ajouter_partie : Proposer_partie(titre, univers, resume initiale, date, lieu)
 create Partie
 
-Controleur_partie-> Partie: new(args...)
-deactivate Controleur_partie
-Partie --> Controleur_partie: Partie P
-Controleur_partie--> Vue_joueur: Partie P
+Controleur_Ajouter_partie-> Partie: new(args...)
+deactivate Controleur_Ajouter_partie
+Partie --> Controleur_Ajouter_partie: Partie P
+Controleur_Ajouter_partie--> Vue_joueur: Partie P
 
 
 

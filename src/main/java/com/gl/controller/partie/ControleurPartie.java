@@ -20,6 +20,7 @@ import com.gl.view.personnage.VuePersonnage;
 public class ControleurPartie extends Controleur{
     private Partie partie;
     private PartieDAO partieDAO = new PartieDAO();
+    private PersonnageDAO personnageDAO = new PersonnageDAO();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -28,7 +29,6 @@ public class ControleurPartie extends Controleur{
         this.partie = partie;
     }
 
-    PartieDAO partieDAO = new PartieDAO();
 
     @Override
     protected void handleLocalInput(String input) {
@@ -57,12 +57,15 @@ public class ControleurPartie extends Controleur{
                 id = Integer.parseInt(entries[1]);
                 personnage = personnageDAO.findById(id);
                 partie.ajouterPersonnage(personnage);
+                personnageDAO.update(personnage);
+                partieDAO.update(partie);
                 break;
 
             case "xp":
                  id = Integer.parseInt(entries[1]);
                  personnage = personnageDAO.findById(id);
                  partie.supprimerPersonnage(personnage);
+                 partieDAO.update(partie);
                 break;
 
             default:

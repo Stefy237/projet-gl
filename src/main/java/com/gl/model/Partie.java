@@ -34,6 +34,7 @@ public class Partie extends Sujet {
 
     public void ajouterPersonnage(Personnage p) {
         personnages.add(p);
+        p.setPartieId(this.id);
         informe();
     }
 

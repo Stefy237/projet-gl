@@ -15,10 +15,11 @@ public class VueAjouterPartie implements Vue {
     @Override
     public void afficher() {
 
-        System.out.println(" Univers | Univers id /n");
+        System.out.println("Listes des univers disponibles avec leur id,: \n");
+        System.out.println(" Univers | Univers id \n");
 
         for (Univers u : Univers.values()) {
-            System.out.println(u + " | " + u.getId() );
+            System.out.println(u + "   |   " + u.getId() );
         }
         
         System.out.println("Appuyez sur entre pour commencer");

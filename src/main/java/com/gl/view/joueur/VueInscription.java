@@ -2,7 +2,7 @@ package com.gl.view.joueur;
 
 import com.gl.view.Vue;
 
-public class VueInscription implements Vue {
+public class VueInscription extends Vue {
 
     @Override
     public void afficher() {

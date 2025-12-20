@@ -12,7 +12,7 @@ import com.gl.model.Personnage;
 import com.gl.persistence.PartieDAO;
 import com.gl.view.Vue;
 
-public class VueJoueur implements Observateur, Vue {
+public class VueJoueur extends Vue implements Observateur {
     private Joueur joueur;
     private PartieDAO partieDAO = new PartieDAO();
 

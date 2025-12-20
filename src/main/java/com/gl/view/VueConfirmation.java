@@ -2,7 +2,7 @@ package com.gl.view;
 
 import com.gl.controller.Commande;
 
-public class VueConfirmation implements Vue {
+public class VueConfirmation extends Vue {
     private String texteConfirmation;
 
     public VueConfirmation(String text) {
@@ -15,7 +15,7 @@ public class VueConfirmation implements Vue {
             %s
                 - %s : pour confirmer
                 - %s : pour annuler
-            """, texteConfirmation, Commande.ACCEPTER.getCmd(), Commande.REFUSER.getCmd()
+            """, texteConfirmation, "o", "n"
         );
     }
     

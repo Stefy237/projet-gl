@@ -9,6 +9,7 @@ public class Biographie extends Sujet{
     private int personnageId;
     private List<Episode> episodes = new ArrayList<>();
 
+    public Biographie() {}
     public Biographie(String titre) {
         this.titre = titre;
     }

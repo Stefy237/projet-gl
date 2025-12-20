@@ -8,7 +8,7 @@ import com.gl.App;
 import com.gl.model.Observateur;
 import com.gl.model.Partie;
 
-public class VuePersonnage implements Observateur, Vue {
+public class VuePersonnage extends Vue implements Observateur {
     private Personnage personnage;
     private JoueurDAO joueurDAO = new JoueurDAO();
     private PartieDAO partieDAO = new PartieDAO();

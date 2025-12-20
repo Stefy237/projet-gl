@@ -14,6 +14,7 @@ public class Episode extends Sujet {
     private String dateCreation;
     private List<Paragraphe> paragraphes = new ArrayList<>();
 
+    public Episode() {}
     public Episode(String titre) {
         this.titre = titre;
         joueurValide = false;

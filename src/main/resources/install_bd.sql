@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Joueur (
 -- 7. Table Biographie 
 CREATE TABLE IF NOT EXISTS Biographie (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titre TEXT
+    titre TEXT DEFAULT 'Biographie sans titre'
 );
 
 -- 3. Table Partie (C'est aussi l'Aventure)
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Participation (
 -- 8. Table Episode (Composition dans Biographie)
 CREATE TABLE IF NOT EXISTS Episode (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titre TEXT,
+    titre TEXT DEFAULT 'Episode sans titre',
     joueur_valide INTEGER DEFAULT 0,
     mj_valide INTEGER DEFAULT 0,
     date_creation TEXT,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS Episode (
 -- 9. Table Paragraphe (Composition dans Episode)
 CREATE TABLE IF NOT EXISTS Paragraphe (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titre TEXT,
+    titre TEXT DEFAULT 'Paragraphe sans titre',
     contenu TEXT,
     is_private INTEGER DEFAULT 1,
     episode_id INTEGER NOT NULL,

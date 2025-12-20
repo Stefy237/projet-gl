@@ -1,9 +1,19 @@
 package com.gl.view;
 
-public interface Vue {
+public abstract class Vue {
+
     /**
      * Affiche la vue
      */
-    public void afficher();
+    private boolean besoinAffichage = true;
 
+    public abstract void afficher();
+
+    public boolean doitEtreAffichee() {
+        return besoinAffichage;
+    }
+
+    public void setBesoinAffichage(boolean besoin) {
+        this.besoinAffichage = besoin;
+    }
 }

@@ -8,6 +8,11 @@ public class Paragraphe extends Sujet {
     private String contenu;
     private boolean isPrivate;
     
+    public Paragraphe(String contenu) {
+        this.contenu = contenu;
+        this.isPrivate = false;
+    }
+
     public Paragraphe(String titre, String contenu, boolean isPrivate) {
         this.titre = titre;
         this.contenu = contenu;

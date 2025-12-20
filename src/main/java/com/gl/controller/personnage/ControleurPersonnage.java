@@ -41,8 +41,9 @@ public class ControleurPersonnage extends Controleur {
         switch (entries[0].trim().toLowerCase()) {
             case "t":
                 if(entries.length != 2) {
-                    System.out.println("Entrée invalide. Veuillez réessayer.");
-                    processInput();
+                    System.out.println("Entrée invalide. Veuillez réessayer.\n >");
+                    return;
+                
                 }
 
                 App.getjoueurConnecte().getPersonnages().remove(personnage);
@@ -54,20 +55,20 @@ public class ControleurPersonnage extends Controleur {
 
             case "c":
                 if(entries.length != 2) {
-                    System.out.println("Entrée invalide. Veuillez réessayer.");
-                    processInput();
+                    System.out.println("Entrée invalide. Veuillez réessayer. \n >");
+                    return;
                 }
                 
                 int newMjId = Integer.parseInt(entries[1]);
                 Joueur newMJ = joueurDAO.findById(newMjId);
 
                 if(newMJ == null) {
-                    System.out.println("Le joueur mentioné n'existe pas -- Action impossible \n Veuillez ressayer");
-                    processInput();
+                    System.out.println("Le joueur mentioné n'existe pas -- Action impossible \n Veuillez ressayer \n >");
+                    return;
                 }
                 if(newMJ.getPartieMJ().isEmpty()) {
-                    System.out.println("Le joueur mentioné n'est meneur de jeu d'aucune partie -- Action impossible \n Veuillez ressayer");
-                    processInput();
+                    System.out.println("Le joueur mentioné n'est meneur de jeu d'aucune partie -- Action impossible \n Veuillez ressayer \n >");
+                    return;
                 }
                 
                 boolean condition = newMJ.getPersonnages().stream()
@@ -76,8 +77,8 @@ public class ControleurPersonnage extends Controleur {
                         partieDAO.findById(personnage.getPartieId()).isDejaJouee() 
                     );
                 if(!newMJ.getPersonnages().isEmpty() && !condition) {
-                    System.out.println("Ce meneur de jeu est engagé en tant que joueur dans une autre partie -- Action impossible \n Veuillez ressayer");
-                    processInput();
+                    System.out.println("Ce meneur de jeu est engagé en tant que joueur dans une autre partie -- Action impossible \n Veuillez ressayer \n >");
+                    return;
                 }
                 
                 personnage.setRelatedMjId(Integer.parseInt(entries[1]));
@@ -101,6 +102,7 @@ public class ControleurPersonnage extends Controleur {
                 break;
         
             default:
+                System.out.println("Entrée invalide. Veuillez réessayer. \n >");
                 break;
         }
     }

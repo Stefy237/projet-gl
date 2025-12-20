@@ -34,7 +34,7 @@ public class ControleurBiographie extends Controleur {
 
     @Override
     protected void handleLocalInput(String input) {
-        final String errorMessage = "Entrée invalide. Veuillez réessayer.";
+        final String errorMessage = "Entrée invalide. Veuillez réessayer. \n >";
         String[] entries = input.split(",");
         int episodeId;
         int paragrapheId;
@@ -44,7 +44,7 @@ public class ControleurBiographie extends Controleur {
             case "a":
                 if (entries.length != 4) {
                     System.out.println(errorMessage);
-                    processInput();
+                    return;
                 }
 
                 Episode episode = new Episode(entries[2]);
@@ -94,36 +94,30 @@ public class ControleurBiographie extends Controleur {
                     routeur.pop();
                 } else {
                     System.out.println(errorMessage);
-                    processInput();
                 }
                 break;
 
             case "p":
                 if (entries.length != 2) {
                     System.out.println(errorMessage);
-                    processInput();
+                    return;
                 }
                 paragrapheId = Integer.parseInt(entries[1]);
                 Paragraphe paragraphe = paragrapheDAO.findById(paragrapheId);
                 if (paragraphe != null) {
-                    // handleYes = () -> {
-                    //     paragraphe.rendrePublique();
-                    //     paragrapheDAO.update(paragraphe);
-                    // };
-                    // routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir rendre ce paragrphe public ?"), handleYes));
-                    paragraphe.rendrePublique();
-                    paragrapheDAO.update(paragraphe);
-                    routeur.pop();
+                    handleYes = () -> {
+                        paragraphe.rendrePublique();
+                        paragrapheDAO.update(paragraphe);
+                    };
+                    routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir rendre ce paragrphe public ?"), handleYes));
                 } else {
                     System.out.println(errorMessage);
-                    processInput();
                 }
                 break;
 
             case "me":
                 if( entries.length != 4) {
                     System.out.println(errorMessage);
-                    processInput();
                 }
                 episodeId = Integer.parseInt(entries[2]);
                 Episode episodeAmodifier = paragrapheDAO.findEpisodeById(episodeId);
@@ -134,71 +128,56 @@ public class ControleurBiographie extends Controleur {
                         routeur.pop();
                     } else {
                         System.out.println(errorMessage);
-                        processInput();
+                        return;
                     }
                 } else {
-                    System.out.println(errorMessage);
-                    processInput();
-                    
+                    System.out.println(errorMessage);                    
                 }
                 break;
             
             case "ve":
                 if (entries.length != 2) {
                     System.out.println(errorMessage);
-                    // processInput();
+                    return;
                 }
                 episodeId = Integer.parseInt(entries[1]);
                 Episode episodeAvalider = episodeDAO.findById(episodeId);
                 if (episodeAvalider != null) {
+                    handleYes = () -> {
                         if(App.getjoueurConnecte().getPersonnages().stream().anyMatch(personnage -> personnage.getBiographieId() == biographie.getId())) {
                             episodeAvalider.setJoueurValide(true);
                         } else {
                             episodeAvalider.setMjValide(true);
                         }
                         episodeDAO.update(episodeAvalider);
-                        routeur.pop();
-                    // handleYes = () -> {
-                    //     if(App.getjoueurConnecte().getPersonnages().stream().anyMatch(personnage -> personnage.getBiographieId() == biographie.getId())) {
-                    //         episodeAvalider.setJoueurValide(true);
-                    //     } else {
-                    //         episodeAvalider.setMjValide(true);
-                    //     }
-                    //     episodeDAO.update(episodeAvalider);
-                    // };
-                    // routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir valider cet épisode ?"), handleYes));
+                    };
+                    routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir valider cet épisode ?"), handleYes));
                 } else {
                     System.out.println(errorMessage);
-                    processInput();
                 }
                 break;
             case "xp":
                 if (entries.length != 2) {
                     System.out.println(errorMessage);
-                    processInput();
-                    paragrapheDAO.delete(Integer.parseInt(entries[1]));
-                    routeur.pop();
                 }
-                // handleYes = () -> {
-                //     paragrapheDAO.delete(Integer.parseInt(entries[1]));
-                // }
+                handleYes = () -> {
+                    paragrapheDAO.delete(Integer.parseInt(entries[1]));
+                };
                 routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir supprimer ce paragraphe ?"), handleYes));
                 break;
             
             case "xe":
                 if (entries.length != 2) {
                     System.out.println(errorMessage);
-                    processInput();
                 }
-                episodeDAO.delete(Integer.parseInt(entries[1]));
-                routeur.pop();
-                // handleYes = () -> {
-                //     episodeDAO.delete(Integer.parseInt(entries[1]));
-                // };
-                // routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir supprimer cet épisode ?"), handleYes));
+                handleYes = () -> {
+                    episodeDAO.delete(Integer.parseInt(entries[1]));
+                };
+                routeur.push(new ControleurConfirmation(routeur, new VueConfirmation("Êtes vous sûr de vouloir supprimer cet épisode ?"), handleYes));
                 break;
         
             default:
+                System.out.println(errorMessage);
                 break;
         }
     }

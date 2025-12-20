@@ -13,26 +13,61 @@ import com.gl.model.Partie;
 import com.gl.model.Univers;
 import com.gl.persistence.PartieDAO;
 import com.gl.view.Vue;
+import com.gl.view.partie.VueAjouterPartie;
 
 public class ControleurAjouterPartie extends Controleur {
+    private PartieDAO partieDAO = new PartieDAO();
+
+     private enum EtapeFormulaire {
+        TITRE, SITUATION, UNIVERS
+    }
+
+    private EtapeFormulaire etapeCourante = EtapeFormulaire.TITRE;
+
+    // Données collectées
+    private String titre;
+    private String initSituation;
+    private String universId;
 
     public ControleurAjouterPartie(Routeur routeur, Vue vue) {
         super(routeur, vue);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
     protected void handleLocalInput(String input) {
-        System.out.println("Entrez le titre de votre aventure");
-        String titre = scanner.nextLine();
-        System.out.println("Entrez le resume de la situation initiale: ");
-        String initSituation = scanner.nextLine();
-        System.out.println("Entrez l'id de l'Univers");
-        int id = scanner.nextInt();
+        switch (etapeCourante) {
+            case TITRE:
+                titre = input.trim();
+                etapeCourante = EtapeFormulaire.SITUATION;
+                afficherProchainChamp();
+                break;
 
-        Partie partie = new Partie(titre,Univers.getById(id),initSituation, App.getjoueurConnecte().getId());
+            case SITUATION:
+                initSituation = input.trim();
+                etapeCourante = EtapeFormulaire.UNIVERS;
+                afficherProchainChamp();
+                break;
 
-        PartieDAO partieDAO = new PartieDAO();
+            case UNIVERS:
+                universId = input.trim();
+                afficherProchainChamp();
+                sauvegarderPartie();
+                routeur.pop();
+                break;
+            default:
+                System.out.println("Entrer une valeur valide : \n >");
+                break;
+        }
+
+    }
+
+    private void afficherProchainChamp() {
+        ((VueAjouterPartie) getVue()).afficherChamp(etapeCourante);
+    }
+    
+    private void sauvegarderPartie() {
+        Partie partie = new Partie(titre,Univers.getById(Integer.parseInt(universId)), initSituation, App.getjoueurConnecte().getId());
+
         int partieId = partieDAO.save(partie);
         try {
             //Path file = Path.of("../../Buffer/Partie/partie0.txt");
@@ -53,13 +88,11 @@ public class ControleurAjouterPartie extends Controleur {
                 StandardOpenOption.APPEND
             );
 
+         System.out.println("partie creee");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println("partie creee");
-        routeur.pop();
     }
     
 }

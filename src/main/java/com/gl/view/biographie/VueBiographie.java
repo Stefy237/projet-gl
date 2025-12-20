@@ -6,7 +6,7 @@ import com.gl.model.Observateur;
 import com.gl.model.Paragraphe;
 import com.gl.view.Vue;
 
-public class VueBiographie implements Observateur, Vue {
+public class VueBiographie extends Vue implements Observateur {
     public enum Type { PRIVEE, PUBLIQUE}
 
     private Biographie biographie;

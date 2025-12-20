@@ -4,17 +4,12 @@ import java.util.Scanner;
 
 import com.gl.Routeur;
 import com.gl.controller.Controleur;
-import com.gl.controller.personnage.ControleurAjouterPersonnage;
 import com.gl.controller.personnage.ControleurPersonnage;
 import com.gl.model.Partie;
 import com.gl.model.Personnage;
-import com.gl.model.Univers;
 import com.gl.persistence.PartieDAO;
 import com.gl.persistence.PersonnageDAO;
 import com.gl.view.Vue;
-import com.gl.view.partie.VueAjouterPartie;
-import com.gl.view.partie.VueModifierPartie;
-import com.gl.view.personnage.VueAjouterPersonnage;
 import com.gl.view.personnage.VuePersonnage;
 
 public class ControleurPartie extends Controleur{
@@ -33,11 +28,7 @@ public class ControleurPartie extends Controleur{
         PersonnageDAO personnageDAO = new PersonnageDAO();
         String[] entries = input.split(",");
 
-        switch (entries[0].trim().toLowerCase()) {
-            case "m":
-                routeur.push(new ControleurModifierPartie(routeur,new VueModifierPartie(),partie));
-                break;
-            
+        switch (entries[0].trim().toLowerCase()) {            
             case "go":
                 int id = Integer.parseInt(entries[1]);
                 Personnage personnage = personnageDAO.findById(id);
@@ -64,8 +55,8 @@ public class ControleurPartie extends Controleur{
                 break;
 
             default:
-                System.out.println("Entrée invalide. Veuillez réessayer.");
-                processInput();
+                System.out.println("Entrée invalide. Veuillez réessayer. \n >");
+                break;
         }
     }
 }

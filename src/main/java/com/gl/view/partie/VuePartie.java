@@ -12,7 +12,7 @@ import com.gl.model.Partie;
 import com.gl.model.Personnage;
 import com.gl.view.Vue;
 
-public class VuePartie implements Observateur,Vue {
+public class VuePartie extends Vue implements Observateur {
     private ControleurPartie controleur;
     private Partie partie;
     
@@ -68,8 +68,6 @@ public class VuePartie implements Observateur,Vue {
             }
             texte = """
                     Entrez : 
-                    - Pour modifier la partie
-                        m
                     - Pour accéder à un personnage
                         go,id du personnage
                     - Pour marquer la partie comme terminée

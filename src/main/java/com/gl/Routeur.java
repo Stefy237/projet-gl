@@ -23,7 +23,9 @@ public class Routeur {
         while (isRunning && !historique.isEmpty()) {
             Controleur courant = historique.peek();
             
-            courant.getVue().afficher();
+            if(courant.getVue().doitEtreAffichee()) {
+                courant.getVue().afficher();
+            }
             
             // Gestion de l'input utilisateur
             courant.processInput();
@@ -42,6 +44,7 @@ public class Routeur {
     public void pop() {
         if (historique.size() > 1) {
             this.historique.pop();
+            this.historique.peek().getVue().setBesoinAffichage(true);
         }
     }
     
@@ -55,11 +58,13 @@ public class Routeur {
         while (historique.size() > 1) {
             historique.pop();
         }
+        historique.peek().getVue().setBesoinAffichage(true);
     }
 
     public void backToHome() {
         while (historique.size() > 3) {
             historique.pop();
         }
+        historique.peek().getVue().setBesoinAffichage(true);
     }
 }

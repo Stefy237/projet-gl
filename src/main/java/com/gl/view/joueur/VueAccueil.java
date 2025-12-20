@@ -2,7 +2,7 @@ package com.gl.view.joueur;
 
 import com.gl.view.Vue;
 
-public class VueAccueil implements Vue {
+public class VueAccueil extends Vue {
 
     String texteAccueil = """
              ==================== Bienvenue sur notre plateforme de roliste ======================= 

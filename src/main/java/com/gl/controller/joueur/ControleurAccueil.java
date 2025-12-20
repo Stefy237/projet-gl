@@ -22,8 +22,7 @@ public class ControleurAccueil extends Controleur {
             routeur.push(new ControleurInscription(routeur, new VueInscription()));
             break;
             default : 
-                System.out.println("Commande inconnue. Veuillez choisir une commande valide");
-                processInput();
+                System.out.println("Commande inconnue. Veuillez choisir une commande valide \n >");
                 break;
         }
     }

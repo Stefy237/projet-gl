@@ -23,13 +23,14 @@ public abstract class Controleur {
         System.out.print("> ");
         String input = scanner.nextLine();
 
+        getVue().setBesoinAffichage(false);
+
         Commande cmd = Commande.fromString(input);
         if (cmd != null) {
             handleGlobalCommand(cmd);
             return; 
         }
 
-        // Sinon, c'est une commande LOCALE
         handleLocalInput(input);
     }
 

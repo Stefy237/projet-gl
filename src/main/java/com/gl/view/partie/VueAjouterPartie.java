@@ -1,28 +1,31 @@
 package com.gl.view.partie;
 
-import java.util.Scanner;
-
-import com.gl.model.Partie;
-import com.gl.model.Personnage;
-import com.gl.model.Univers;
-import com.gl.persistence.PartieDAO;
 import com.gl.view.Vue;
 
-public class VueAjouterPartie implements Vue {
-
-    Scanner scanner = new Scanner(System.in);
-
+public class VueAjouterPartie extends Vue {
     @Override
     public void afficher() {
+        afficherChamp(null);
+    }
 
-        System.out.println(" Univers | Univers id /n");
-
-        for (Univers u : Univers.values()) {
-            System.out.println(u + " | " + u.getId() );
+    public void afficherChamp(Object etape) {
+        if (etape == null) {
+            System.out.println("Entrez le titre de votre aventure: \n >");
+            return;
         }
         
-        System.out.println("Appuyez sur entre pour commencer");
-
+        String etapeStr = etape.toString();
+        
+        switch (etapeStr) {
+            case "SITUATION":
+                System.out.println("Entrez le resume de la situation initiale: \n >");
+                break;
+            case "UNIVERS":
+                System.out.println("Entrez l'id de l'Univers :\n >");
+                break;
+            default : 
+                System.out.println("Entrer une valeur valide. \n >");
+        }
     }
     
 }
